@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 "/register/**" ,
                                 "/test/**")
                         .permitAll()
-                        .requestMatchers("/adapter/**").hasAuthority(SystemRoles.ADAPTER.name())
+                        .requestMatchers("/adapter/**").hasAuthority(SystemRoles.ADOPTER.name())
                         .requestMatchers("/manager/**").hasAuthority(SystemRoles.MANAGER.name())
                         .requestMatchers("/staff/**").hasAuthority(SystemRoles.STAFF.name())
                 ).sessionManagement((session) -> session
