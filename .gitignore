@@ -15,6 +15,7 @@ Backend/petShelter/target/
 
 ### IntelliJ IDEA ###
 .idea
+Backend/.idea
 *.iws
 *.iml
 *.ipr

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpaBuddyIdeaProjectConfig" newRepositoryParent="org.springframework.data.jpa.repository.JpaRepository">
-    <option name="defaultUnitInitialized" value="true" />
-    <option name="renamerInitialized" value="true" />
-    <option name="reverseEngineeringLastDbConnectionId" value="f6239250-0eca-45d2-8397-642f8b97f8f2__sheltermanagement" />
-    <option name="reLastEntityCreationPackage" value="Backend/petShelter/src/main/java/com/example/petshelter/Models" />
-  </component>
-</project>
