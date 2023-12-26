@@ -1,8 +1,9 @@
-package com.example.petshelter.Services;
+package com.example.petshelter.Services.Shelter;
 
 import com.example.petshelter.DAOs.ShelterRepository;
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
+import com.example.petshelter.Services.Shelter.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
