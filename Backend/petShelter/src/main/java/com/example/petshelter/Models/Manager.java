@@ -1,13 +1,13 @@
 package com.example.petshelter.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,5 +36,8 @@ public class Manager {
     @NotNull
     @Column(name = "password", nullable = false, length = 45)
     private String password;
+
+    @OneToMany(mappedBy = "managerUsername")
+    private Set<Shelter> shelters = new LinkedHashSet<>();
 
 }

@@ -1,12 +1,12 @@
 package com.example.petshelter.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,5 +21,8 @@ public class BreedRelation {
     @Size(max = 45)
     @Column(name = "species", length = 45)
     private String species;
+
+    @OneToMany(mappedBy = "breed")
+    private Set<Pet> pets = new LinkedHashSet<>();
 
 }

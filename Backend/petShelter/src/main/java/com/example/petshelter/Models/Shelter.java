@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,5 +34,11 @@ public class Shelter {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_username", nullable = false)
     private Manager managerUsername;
+
+    @OneToMany(mappedBy = "shelterName")
+    private Set<Pet> pets = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "shelterName")
+    private Set<Staff> staff = new LinkedHashSet<>();
 
 }

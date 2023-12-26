@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 @Table(name = "pet")
 public class Pet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pet_id", nullable = false)
     private Integer id;
 
@@ -49,12 +52,18 @@ public class Pet {
     private String behaviour;
 
     @NotNull
-    @Column(name = "adopted", nullable = false)
-    private Byte adopted;
+    @Column(name = "isAdopted", nullable = false)
+    private Boolean isAdopted = false;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "shelter_name", nullable = false)
     private Shelter shelterName;
+
+    @OneToMany(mappedBy = "pet")
+    private Set<Application> applications = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "pet")
+    private Set<Document> documents = new LinkedHashSet<>();
 
 }
