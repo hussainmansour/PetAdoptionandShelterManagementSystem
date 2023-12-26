@@ -1,5 +1,12 @@
+import { BrowserRouter } from "react-router-dom";
+import Wrapper from "./Routes/Wrapper";
+
 function App() {
-  return <div className="text-3xl">Hello World!</div>;
+  return (
+    <BrowserRouter>
+      <Wrapper />
+    </BrowserRouter>
+  );
 }
 
 export default App;
