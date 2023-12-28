@@ -12,6 +12,7 @@ import com.example.petshelter.Models.Shelter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.petshelter.Services.Shelter.ShelterServiceImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +60,7 @@ class ShelterServiceImplDiffblueTest {
     //   Diffblue Cover tried to run the arrange/act section, but the method under
     //   test threw
     //   java.lang.ClassCastException: class org.springframework.http.ResponseEntity$DefaultBuilder cannot be cast to class org.springframework.http.ResponseEntity (org.springframework.http.ResponseEntity$DefaultBuilder and org.springframework.http.ResponseEntity are in unnamed module of loader com.diffblue.cover.g.g @45048695)
-    //       at com.example.petshelter.Services.ShelterServiceImpl.insertShelter(ShelterServiceImpl.java:27)
+    //       at com.example.petshelter.Services.Shelter.ShelterServiceImpl.insertShelter(ShelterServiceImpl.java:27)
     //   See https://diff.blue/R013 to resolve this issue.
 
     // Arrange

@@ -1,4 +1,4 @@
-package com.example.petshelter.Services;
+package com.example.petshelter.Services.Shelter;
 
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
