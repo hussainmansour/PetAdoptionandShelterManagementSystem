@@ -1,9 +1,11 @@
 package com.example.petshelter.Controllers;
 
+import com.example.petshelter.DTOs.GetPetsDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +20,13 @@ public class PetController {
     private PetService petService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Pet>> getAllPets() {
-        List<Pet> pets = petService.getAllPets();
-        return ResponseEntity.ok(pets);
+    public ResponseEntity<Page<Pet>> getAllPets(@RequestBody GetPetsDTO getPetsDTO) {
+        return petService.getAllPets(getPetsDTO);
     }
 
     @GetMapping("/non-adopted")
-    public ResponseEntity<List<Pet>> getAllNonAdoptedPets() {
-        List<Pet> nonAdoptedPets = petService.getAllPets();
-        return ResponseEntity.ok(nonAdoptedPets);
+    public ResponseEntity<Page<Pet>> getAllNonAdoptedPets(@RequestParam int pageNo) {
+        return petService.getAllNonAdoptedPets(pageNo);
     }
 
     @GetMapping("/search/species")
