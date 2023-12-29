@@ -1,6 +1,7 @@
 package com.example.petshelter.Controllers;
 
 import com.example.petshelter.DTOs.GetPetsDTO;
+import com.example.petshelter.DTOs.PetDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("/test/pets")
 public class PetController {
 
     @Autowired
@@ -54,7 +55,7 @@ public class PetController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> insertPet(@RequestBody Pet pet) {
+    public ResponseEntity<String> insertPet(@RequestBody PetDTO pet) {
         try {
             petService.insertPet(pet);
             return ResponseEntity.ok("Pet inserted successfully");
