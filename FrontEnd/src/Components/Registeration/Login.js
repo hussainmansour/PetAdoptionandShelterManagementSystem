@@ -28,9 +28,10 @@ function Login() {
     if (tokenFromCookie) {
       const decodedToken = atob(tokenFromCookie.split(".")[1]);
       const role = JSON.parse(decodedToken).role;
+      const username = JSON.parse(decodedToken).sub;
       setPerson({
         isAuthorized: true,
-        username: "",
+        username: username,
         privilege: role,
         personObj: {},
       });
