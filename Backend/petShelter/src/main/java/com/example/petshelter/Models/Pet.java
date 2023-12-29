@@ -3,8 +3,7 @@ package com.example.petshelter.Models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -13,6 +12,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "pet")
 public class Pet {
     @Id

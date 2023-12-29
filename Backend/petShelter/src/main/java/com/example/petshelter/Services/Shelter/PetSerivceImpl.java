@@ -1,7 +1,11 @@
 package com.example.petshelter.Services.Shelter;
 
+import com.example.petshelter.DAOs.BreedRelationRepository;
 import com.example.petshelter.DAOs.PetRepository;
+import com.example.petshelter.DAOs.ShelterRepository;
 import com.example.petshelter.DTOs.GetPetsDTO;
+import com.example.petshelter.DTOs.PetDTO;
+import com.example.petshelter.Models.BreedRelation;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.Filters.FilterCriteria;
 import com.example.petshelter.Services.Shelter.Filters.FilterFactory;
@@ -27,6 +31,11 @@ public class PetSerivceImpl implements PetService{
 
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private BreedRelationRepository breedRelationRepository;
+    @Autowired
+    private ShelterRepository shelterRepository;
     @Autowired
     private FilterFactory filterFactory;
 
@@ -81,8 +90,28 @@ public class PetSerivceImpl implements PetService{
         return ResponseEntity.ok(petsPage);
     }
 
-    public void insertPet(Pet pet){
-        petRepository.save(pet);
+    public void insertPet(PetDTO pet){
+        BreedRelation breedRelation = BreedRelation.builder()
+                .breedId(pet.getBreed())
+                .species(pet.getSpecies())
+                .build();
+        if(breedRelationRepository.findById(pet.getBreed()).isEmpty()){
+            breedRelationRepository.save(breedRelation);
+        }
+        System.out.println("fdsf");
+        Pet pet1 = Pet.builder()
+                .behaviour(pet.getBehaviour())
+                .dateOfBirth(pet.getDateOfBirth())
+                .description(pet.getDescription())
+                .gender(pet.getGender())
+                .healthStatus(pet.getHealthStatus())
+                .shelterName(shelterRepository.findById(pet.getShelterName()).orElseThrow())
+                .name(pet.getName())
+                .breed(breedRelationRepository.findById(pet.getBreed()).orElseThrow())
+                .isAdopted(false)
+                .build();
+
+        petRepository.save(pet1);
     }
 
     public List<Pet> searchByShelter(String shelterName){
