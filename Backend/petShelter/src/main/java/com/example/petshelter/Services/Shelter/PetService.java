@@ -1,11 +1,17 @@
 package com.example.petshelter.Services.Shelter;
 
+import com.example.petshelter.DTOs.GetPetsDTO;
 import com.example.petshelter.Models.Pet;
+import com.example.petshelter.Services.Shelter.Filters.RelationList;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface PetService {
-    public List<Pet> getAllPets();
+
+    public ResponseEntity<Page<Pet>> getAllPets(GetPetsDTO getPetsDTO);
+    public ResponseEntity<Page<Pet>> getAllNonAdoptedPets(int pageNo );
 
     public void insertPet(Pet pet);
 

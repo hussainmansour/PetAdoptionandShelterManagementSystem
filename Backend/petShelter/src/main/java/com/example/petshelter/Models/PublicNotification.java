@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name = "public_notification")
 public class PublicNotification {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id", nullable = false)
     private Integer id;
 
