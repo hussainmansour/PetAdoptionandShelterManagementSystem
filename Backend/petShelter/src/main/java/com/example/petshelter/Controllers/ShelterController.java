@@ -1,5 +1,6 @@
 package com.example.petshelter.Controllers;
 
+import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Services.Shelter.ShelterService;
@@ -24,9 +25,9 @@ public class ShelterController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> insertShelter(@RequestBody Shelter shelter) {
+    public ResponseEntity<String> insertShelter(@RequestBody ShelterDto shelterDto) {
         try {
-            shelterService.insertShelter(shelter);
+            shelterService.insertShelter(shelterDto);
             return ResponseEntity.ok("Shelter inserted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inserting shelter");

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/public-notifications")
+@RequestMapping("/test/public-notifications")
 public class PublicNotificationController {
 
     @Autowired

@@ -24,9 +24,9 @@ public class PetSerivceImpl implements PetService{
         return petRepository.searchByBreed(breed);
     }
 
-    public List<Pet> searchByAge(String age) {
-        return petRepository.searchByAge(String.valueOf(age));
-    }
+//    public List<Pet> searchByAge(Integer age) {
+//        return petRepository.searchByAge(age);
+//    }
 
     public List<Pet> searchByLocation(String location) {
         return petRepository.searchByShelterLocation(location);

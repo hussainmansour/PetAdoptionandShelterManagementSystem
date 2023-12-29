@@ -2,6 +2,7 @@ package com.example.petshelter.Controllers;
 
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +41,11 @@ public class PetController {
         return ResponseEntity.ok(pets);
     }
 
-    @GetMapping("/search/age")
-    public ResponseEntity<List<Pet>> searchByAge(@RequestParam String age) {
-        List<Pet> pets = petService.searchByAge(age);
-        return ResponseEntity.ok(pets);
-    }
+//    @GetMapping("/search/age")
+//    public ResponseEntity<List<Pet>> searchByAge(@RequestParam Integer age) {
+//        List<Pet> pets = petService.searchByAge(age);
+//        return ResponseEntity.ok(pets);
+//    }
 
     @GetMapping("/search/location")
     public ResponseEntity<List<Pet>> searchByLocation(@RequestParam String location) {

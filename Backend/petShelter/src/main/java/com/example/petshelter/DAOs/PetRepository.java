@@ -20,8 +20,8 @@ public interface PetRepository extends JpaRepository<Pet, Integer> {
     List<Pet> searchByBreed(@Param("breed") String breed);
 
 
-    @Query("SELECT p FROM Pet p WHERE FUNC('DATEDIFF', CURRENT_DATE, p.dateOfBirth) / 365 >= :age")
-    List<Pet> searchByAge(@Param("age") String age);
+//    @Query("SELECT p FROM Pet p WHERE FUNC('DATEDIFF', CURRENT_DATE, p.dateOfBirth) / 365 >= :age")
+//    List<Pet> searchByAge(@Param("age") Integer age);
 
 
     @Query("SELECT p FROM Pet p WHERE p.shelterName.location = :shelterLocation")

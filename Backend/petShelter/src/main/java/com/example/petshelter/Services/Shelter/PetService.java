@@ -16,7 +16,7 @@ public interface PetService {
     public List<Pet> searchByBreed(String breed);
 
 
-    public List<Pet> searchByAge(String age);
+//    public List<Pet> searchByAge(Integer age);
 
 
     public List<Pet> searchByLocation(String location);

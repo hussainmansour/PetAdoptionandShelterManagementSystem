@@ -2,6 +2,7 @@ package com.example.petshelter.Services.Shelter;
 
 import com.example.petshelter.DAOs.ManagerRepository;
 import com.example.petshelter.DAOs.ShelterRepository;
+import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Services.Shelter.ShelterService;
@@ -27,7 +28,12 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     @Override
-    public ResponseEntity insertShelter(Shelter shelter) {
+    public ResponseEntity insertShelter(ShelterDto shelterDto) {
+        Shelter shelter = Shelter.builder()
+                //.managerUsername(managerRepository.findById(shelterDto.managerUsername).orElseThrow())
+                .name(shelterDto.ShelterName)
+                .contactNo(shelterDto.contactNo)
+                .build();
         shelterRepository.save(shelter);
         return (ResponseEntity) ResponseEntity.ok();
     }
