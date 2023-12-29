@@ -9,8 +9,5 @@ public class ShelterDto {
     public String managerUsername;
     public String ShelterName ;
     public String location;
-
     public String contactNo;
-
-
 }
