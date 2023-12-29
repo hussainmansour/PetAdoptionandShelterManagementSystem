@@ -9,7 +9,7 @@ const defaultPersonState = () => {
   return {
     isAuthorized: false,
     username: "",
-    privilege: managerPrivilege,
+    privilege: "GLOBAL",
     personObj: {}
   };
 };

@@ -2,17 +2,18 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import GetAuthDataFn from "../../Routes/Wrapper";
+import { register } from "../../Services/RegisterationService";
+import { GetAuthDataFn } from "../../Routes/Wrapper";
 
-function Signup(props) {
+function Signup() {
   const navigate = useNavigate();
   const { setPerson } = GetAuthDataFn();
 
   const [info, setInfo] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    contactNumber: "",
+    fname: "",
+    lname: "",
+    username: "",
+    contactNo: "",
     password: "",
     confirmedPassword: "",
     role: "",
@@ -28,14 +29,35 @@ function Signup(props) {
 
   const handleSubmit = async () => {
     console.log(
-      info.firstName,
-      info.lastName,
-      info.userName,
-      info.contactNumber,
+      info.fname,
+      info.lname,
+      info.username,
+      info.contactNo,
       info.password,
       info.confirmedPassword,
       info.role
     );
+    const response = await register({
+      fname: info.fname,
+      lname: info.lname,
+      username: info.username,
+      contactNo: info.contactNo,
+      password: info.password,
+      role: info.role,
+    });
+    console.log(response);
+    if (response === "failed") {
+      alert("Registration failed");
+    } else {
+      setPerson({
+        isAuthorized: true,
+        username: info.username,
+        privilege: info.role.toUpperCase(),
+        personObj: {},
+      });
+      console.log(info.role.toUpperCase());
+      navigate("/");
+    }
   };
 
   return (
@@ -64,9 +86,9 @@ function Signup(props) {
                   <input
                     className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     type="text"
-                    placeholder="Enter your firstName"
-                    name="firstName"
-                    value={info.firstName}
+                    placeholder="Enter your fname"
+                    name="fname"
+                    value={info.fname}
                     onChange={inputChange}
                     required
                   />
@@ -84,8 +106,8 @@ function Signup(props) {
                     className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     type="text"
                     placeholder="Enter your lastName"
-                    name="lastName"
-                    value={info.lastName}
+                    name="lname"
+                    value={info.lname}
                     onChange={inputChange}
                     required
                   />
@@ -105,8 +127,8 @@ function Signup(props) {
                     className="bg-gray-50 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     type="text"
                     placeholder="Enter your userName"
-                    name="userName"
-                    value={info.userName}
+                    name="username"
+                    value={info.username}
                     onChange={inputChange}
                     required
                   />
@@ -125,8 +147,8 @@ function Signup(props) {
                     type="tel"
                     placeholder="222 222 2222"
                     pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-                    name="contactNumber"
-                    value={info.contactNumber}
+                    name="contactNo"
+                    value={info.contactNo}
                     onChange={inputChange}
                     required
                   />
