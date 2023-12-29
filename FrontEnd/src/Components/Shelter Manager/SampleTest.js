@@ -7,16 +7,7 @@ import { GetAuthDataFn } from "../../Routes/Wrapper";
 
 function ManagerGroups() {
 
-  const { person, setPerson } = GetAuthDataFn();
-
-  useEffect(() => {
-    setPerson({
-      isAuthorized: true,
-      username: "Amr Ahmed",
-      privilege: "MANAGER",
-      personObj: {}
-    });
-  }, []);
+  const { person } = GetAuthDataFn();
 
   const data = [
     {
