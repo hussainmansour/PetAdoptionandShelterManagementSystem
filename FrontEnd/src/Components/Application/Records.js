@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../Shelter Manager/Assets/header.png";
 
-function Application(props) {
+function Records(props) {
   const data = [
     {
       username: "JohnDoe123",
@@ -9,17 +9,7 @@ function Application(props) {
       dateOfApplication: "2023-12-28",
       petId: "001",
       petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
+      status: "Accepted",
     },
     {
       username: "JohnDoe123",
@@ -27,17 +17,7 @@ function Application(props) {
       dateOfApplication: "2023-12-28",
       petId: "001",
       petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
+      status: "Rejected",
     },
     {
       username: "JohnDoe123",
@@ -45,17 +25,7 @@ function Application(props) {
       dateOfApplication: "2023-12-28",
       petId: "001",
       petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
+      status: "Accepted",
     },
     {
       username: "JohnDoe123",
@@ -63,17 +33,7 @@ function Application(props) {
       dateOfApplication: "2023-12-28",
       petId: "001",
       petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
+      status: "Rejected",
     },
     {
       username: "JohnDoe123",
@@ -81,18 +41,33 @@ function Application(props) {
       dateOfApplication: "2023-12-28",
       petId: "001",
       petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
+      status: "Accepted",
     },
     {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
+      username: "JohnDoe123",
+      contactNumber: "123-456-7890",
+      dateOfApplication: "2023-12-28",
+      petId: "001",
+      petName: "Fluffy",
+      status: "Accepted",
     },
+    {
+      username: "JohnDoe123",
+      contactNumber: "123-456-7890",
+      dateOfApplication: "2023-12-28",
+      petId: "001",
+      petName: "Fluffy",
+      status: "Accepted",
+    },
+    {
+      username: "JohnDoe123",
+      contactNumber: "123-456-7890",
+      dateOfApplication: "2023-12-28",
+      petId: "001",
+      petName: "Fluffy",
+      status: "Accepted",
+    },
+
     // Add more objects as needed for additional rows of data
   ];
   const isLoading = false;
@@ -106,7 +81,7 @@ function Application(props) {
       />
       <div className="mx-auto max-w-screen opacity-75 pb-10 px-8 ">
         <div className="text-5xl text-gray-700 bg-gray-50 tracking-widest dark:bg-gray-700 text-center dark:text-gray-400 mt-5 px-4 py-3 rounded-2xl dark:bg-opacity-25">
-          Applications
+          Applications Records
         </div>{" "}
         {/* table of staff members */}
         <div className="bg-white dark:bg-gray-800 relative mt-12 shadow-md sm:rounded-lg overflow-hidden ">
@@ -131,10 +106,7 @@ function Application(props) {
                     pet id
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Accept
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Reject
+                    status
                   </th>
                 </tr>
               </thead>
@@ -154,26 +126,14 @@ function Application(props) {
                       <td className="px-4 py-3">{app.dateOfApplication}</td>
                       <td className="px-4 py-3">{app.petName}</td>
                       <td className="px-4 py-3">{app.petId}</td>
-                      <td className="px-4 py-3">
-                        <button
+                      <button
                           id={`user-${index}-dropdown-button`}
                           data-dropdown-toggle={`user-${index}-dropdown`}
-                          className="bg-csut items-center p-0.5 text-lg font-medium w-2/3 text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-customGreen dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
+                          className={`bg-csut ${app.status === 'Accepted' ? 'bg-green-500' : 'bg-red-500'} pointer-events-none items-center p-0.5 mt-2 text-lg font-medium w-2/3 text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2`}
                           type="button"
                         >
-                          Accept
+                          {app.status}
                         </button>
-                      </td>
-                      <td className="px-4 py-3">
-                        <button
-                          id={`user-${index}-dropdown-button`}
-                          data-dropdown-toggle={`user-${index}-dropdown`}
-                          className="bg-csut items-center p-0.5 text-lg w-2/3 font-medium text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-red-500 dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
-                          type="button"
-                        >
-                          Reject
-                        </button>
-                      </td>
                     </tr>
                   ))
                 )}
@@ -186,4 +146,4 @@ function Application(props) {
   );
 }
 
-export default Application;
+export default Records;

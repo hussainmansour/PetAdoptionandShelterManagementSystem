@@ -6,6 +6,7 @@ import ManagerGroups from "../Components/Shelter Manager/SampleTest";
 import StaffMember from "../Components/Staff Member/SampleTest";
 import Shelter from "../Components/Shelter Manager/Shelter";
 import Application from "../Components/Application/Application";
+import Records from "../Components/Application/Records";
 
 export const globalPrivilege = "GLOBAL";
 export const adopterPrivilege = "ADOPTER";
@@ -51,7 +52,7 @@ export const nav = [
    {
         path: "/staff-member",
         Title: "Staff Member",
-        element: <Application />,
+        element: <Records />,
         status: staffPrivilege
    },
    // error page
