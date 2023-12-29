@@ -1,20 +1,25 @@
 package com.example.petshelter.Models;
 
+import com.example.petshelter.Enums.SystemRoles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+@Entity
 @Getter
 @Setter
-@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "manager")
 public class Manager implements UserDetails {
     @Id
@@ -45,8 +50,8 @@ public class Manager implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+        return List.of(new SimpleGrantedAuthority(SystemRoles.MANAGER.name()));
+     }
 
     @Override
     public String getUsername() {
