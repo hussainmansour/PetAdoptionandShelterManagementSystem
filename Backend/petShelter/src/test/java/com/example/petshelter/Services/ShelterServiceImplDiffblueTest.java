@@ -100,7 +100,7 @@ class ShelterServiceImplDiffblueTest {
     manager.setPassword("iloveyou");
 
     // Act
-    List<Shelter> actualManagerShelters = shelterServiceImpl.getManagerShelters(manager);
+    List<Shelter> actualManagerShelters = shelterServiceImpl.getManagerShelters(String.valueOf(manager));
 
     // Assert
     verify(shelterRepository).findByManagerUsername(Mockito.<Manager>any());

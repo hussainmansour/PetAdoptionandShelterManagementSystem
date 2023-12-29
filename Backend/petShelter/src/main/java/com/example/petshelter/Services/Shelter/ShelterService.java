@@ -9,6 +9,6 @@ import java.util.List;
 public interface ShelterService {
     List<Shelter> getAllShelter();
     ResponseEntity insertShelter(Shelter shelter);
-    List<Shelter> getManagerShelters(Manager manager);
+    List<Shelter> getManagerShelters(String managerUserName);
 
 }
