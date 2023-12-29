@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/shelters")
+@RequestMapping("/test/shelters")
 public class ShelterController {
 
     @Autowired
@@ -30,9 +30,10 @@ public class ShelterController {
 
     @PostMapping("/insert")
     public ResponseEntity<String> insertShelter(@RequestBody ShelterDto shelterDto) {
+        System.out.println("fdsf");
         try {
-            shelterService.insertShelter(shelterDto);
-            return ResponseEntity.ok("Shelter inserted successfully");
+            ;
+            return ResponseEntity.ok(shelterService.insertShelter(shelterDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inserting shelter");
         }
@@ -40,9 +41,9 @@ public class ShelterController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateShelter(@RequestBody ShelterDto shelterDto) {
+
         try {
-            shelterService.updateShelter(shelterDto);
-            return ResponseEntity.ok("Shelter updated successfully");
+            return ResponseEntity.ok(shelterService.updateShelter(shelterDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating shelter");
         }
@@ -63,7 +64,15 @@ public class ShelterController {
 
     @PostMapping("/addStaffMember")
     public ResponseEntity<String> addStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
+        System.out.println("here");
         String result = shelterService.addStaffMember(staffDTO);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/updateStaffMember")
+    public ResponseEntity<String> updateStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
+        System.out.println("here");
+        String result = shelterService.updateStaffMember(staffDTO);
         return ResponseEntity.ok(result);
     }
 

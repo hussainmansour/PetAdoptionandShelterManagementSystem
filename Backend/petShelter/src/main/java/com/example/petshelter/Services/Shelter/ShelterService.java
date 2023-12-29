@@ -12,12 +12,14 @@ import java.util.Set;
 
 public interface ShelterService {
     List<Shelter> getAllShelter();
-    ResponseEntity insertShelter(ShelterDto shelterDto);
+    String insertShelter(ShelterDto shelterDto);
     List<Shelter> getManagerShelters(String managerUserName);
 
-    ResponseEntity updateShelter(ShelterDto shelterDto);
+    String updateShelter(ShelterDto shelterDto);
 
     Set<Staff> getShelterStaffs(String shelterName);
 
     String addStaffMember(@Valid StaffDTO staff);
+
+    String updateStaffMember(@Valid StaffDTO staff);
 }
