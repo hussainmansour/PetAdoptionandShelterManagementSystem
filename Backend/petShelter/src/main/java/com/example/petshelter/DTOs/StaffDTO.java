@@ -1,5 +1,6 @@
 package com.example.petshelter.DTOs;
 
+import com.example.petshelter.Models.Staff;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
