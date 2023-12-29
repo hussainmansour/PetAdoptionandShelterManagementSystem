@@ -2,8 +2,9 @@ import Login from "../Components/Registeration/Login";
 import Signup from "../Components/Registeration/Signup";
 import Error from "../Components/Error/Error";
 import SampleTest1 from "../Components/Adopter/SampleTest";
-import SampleTest2 from "../Components/Shelter Manager/SampleTest";
+import ManagerGroups from "../Components/Shelter Manager/SampleTest";
 import SampleTest3 from "../Components/Staff Member/SampleTest";
+import Shelter from "../Components/Shelter Manager/Shelter";
 
 export const globalPrivilege = "GLOBAL";
 export const adopterPrivilege = "ADOPTER";
@@ -36,7 +37,13 @@ export const nav = [
    {
         path: "/shelter-manager",
         Title: "Shelter Manager",
-        element: <SampleTest2 />,
+        element: <ManagerGroups />,
+        status: managerPrivilege
+   },
+   {
+        path: "/shelter",
+        Title: "Shelters",
+        element: <Shelter />,
         status: managerPrivilege
    },
     // staff member
