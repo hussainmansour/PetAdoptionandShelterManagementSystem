@@ -16,6 +16,7 @@ import java.util.Date;
 @Table(name = "private_notification")
 public class PrivateNotification {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id", nullable = false)
     private Integer id;
 

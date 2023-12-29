@@ -76,6 +76,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Pet pet = app.get(0).getPet();
         if(updateApplicationDTO.status.equals("Accepted")){
             pet.setIsAdopted(true);
+
             petRepository.save(pet);
         }
         app.get(0).setDate(new Date());
