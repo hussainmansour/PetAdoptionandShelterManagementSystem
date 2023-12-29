@@ -45,8 +45,8 @@ public class Manager implements UserDetails {
     @Column(name = "password", nullable = false, length = 45)
     private String password;
 
-    @OneToMany(mappedBy = "managerUsername")
-    private Set<Shelter> shelters = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "managerUsername")
+//    private Set<Shelter> shelters = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

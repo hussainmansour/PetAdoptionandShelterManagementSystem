@@ -2,14 +2,17 @@ package com.example.petshelter.Models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "application")
 public class Application {
     @EmbeddedId
@@ -32,6 +35,6 @@ public class Application {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private Date date;
 
 }
