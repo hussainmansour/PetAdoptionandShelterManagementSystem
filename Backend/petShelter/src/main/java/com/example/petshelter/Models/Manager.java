@@ -40,9 +40,9 @@ public class Manager implements UserDetails {
     @Column(name = "lname", length = 45)
     private String lname;
 
-    @Size(max = 45)
+    @Size(max = 80)
     @NotNull
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false, length = 80)
     private String password;
 
 //    @OneToMany(mappedBy = "managerUsername")

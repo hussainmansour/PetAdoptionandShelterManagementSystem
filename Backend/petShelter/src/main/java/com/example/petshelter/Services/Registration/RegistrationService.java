@@ -11,6 +11,8 @@ import com.example.petshelter.Models.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Service
 public class RegistrationService {
@@ -24,14 +26,19 @@ public class RegistrationService {
     @Autowired
     private StaffRepository staffRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     public boolean register(RegistrationRequestDTO registrationRequest) {
+        System.out.println(passwordEncoder.encode(registrationRequest.getPassword()));
         if (checkUserCredentials(registrationRequest)) {
             switch (registrationRequest.getRole().toLowerCase()) {
                 case "adopter" ->
                     adopterRepository.save(
                             Adopter.builder()
                                     .adopterUsername(registrationRequest.getUsername())
-                                    .password(registrationRequest.getPassword())
+                                    .password(passwordEncoder.encode(registrationRequest.getPassword()))
                                     .fname(registrationRequest.getFname())
                                     .lname(registrationRequest.getLname())
                                     .contactNo(registrationRequest.getContactNo())
@@ -40,7 +47,7 @@ public class RegistrationService {
                 case "manager" -> managerRepository.save(
                         Manager.builder()
                                 .managerUsername(registrationRequest.getUsername())
-                                .password(registrationRequest.getPassword())
+                                .password(passwordEncoder.encode(registrationRequest.getPassword()))
                                 .fname(registrationRequest.getFname())
                                 .lname(registrationRequest.getLname())
                                 .contactNo(registrationRequest.getContactNo())
