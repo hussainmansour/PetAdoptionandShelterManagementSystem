@@ -2,14 +2,17 @@ package com.example.petshelter.Models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "private_notification")
 public class PrivateNotification {
     @Id
@@ -17,7 +20,7 @@ public class PrivateNotification {
     private Integer id;
 
     @Column(name = "date")
-    private LocalDate date;
+    private Date date;
 
     @Lob
     @Column(name = "description")
