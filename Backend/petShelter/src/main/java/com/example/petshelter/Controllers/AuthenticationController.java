@@ -2,6 +2,7 @@ package com.example.petshelter.Controllers;
 
 import com.example.petshelter.DTOs.Login.AuthenticationRequestDTO;
 import com.example.petshelter.Services.Login.AuthenticationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String>
-    login(@RequestBody AuthenticationRequestDTO authenticationRequest) {
+    login(@Valid @RequestBody AuthenticationRequestDTO authenticationRequest) {
         System.out.println(authenticationRequest.toString());
         String token = authenticationService.authenticate(
                 authenticationRequest.getUsername(),
