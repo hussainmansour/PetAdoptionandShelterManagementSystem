@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { RenderRoutes } from "./RenderRoutes";
-import { adopterPrivilege, globalPrivilege, managerPrivilege } from "./routes";
+import { adopterPrivilege, globalPrivilege, managerPrivilege, staffPrivilege } from "./routes";
 
 const AuthContext = createContext();
 export const GetAuthDataFn = () => useContext(AuthContext);
@@ -9,7 +9,7 @@ const defaultPersonState = () => {
   return {
     isAuthorized: false,
     username: "",
-    privilege: managerPrivilege,
+    privilege: staffPrivilege,
     personObj: {}
   };
 };

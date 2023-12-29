@@ -3,8 +3,9 @@ import Signup from "../Components/Registeration/Signup";
 import Error from "../Components/Error/Error";
 import SampleTest1 from "../Components/Adopter/SampleTest";
 import ManagerGroups from "../Components/Shelter Manager/SampleTest";
-import SampleTest3 from "../Components/Staff Member/SampleTest";
+import StaffMember from "../Components/Staff Member/SampleTest";
 import Shelter from "../Components/Shelter Manager/Shelter";
+import Application from "../Components/Application/Application";
 
 export const globalPrivilege = "GLOBAL";
 export const adopterPrivilege = "ADOPTER";
@@ -50,7 +51,7 @@ export const nav = [
    {
         path: "/staff-member",
         Title: "Staff Member",
-        element: <SampleTest3 />,
+        element: <Application />,
         status: staffPrivilege
    },
    // error page
