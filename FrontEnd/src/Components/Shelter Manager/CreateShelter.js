@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import ShelterModal from "./ShelterModal";
 
-function CreateShelter(props) {
+function CreateShelter() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {

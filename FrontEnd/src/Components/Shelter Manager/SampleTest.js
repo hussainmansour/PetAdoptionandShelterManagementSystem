@@ -5,7 +5,7 @@ import ShelterCard from "./ShelterCard";
 import Loading from "./Loading";
 import { GetAuthDataFn } from "../../Routes/Wrapper";
 
-function ManagerGroups(props) {
+function ManagerGroups() {
 
   const { person, setPerson } = GetAuthDataFn();
 

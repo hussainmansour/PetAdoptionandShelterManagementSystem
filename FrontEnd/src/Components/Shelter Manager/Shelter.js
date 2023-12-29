@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import logo from "./Assets/header.png";
 import Loading from "./Loading";
 import AddStaff from "./AddStaff";
+import UpdateShelter from "./UpdateShelter";
 
 function Shelter() {
   const location = useLocation();
@@ -139,6 +140,7 @@ function Shelter() {
         </div>
       </div>
       <AddStaff shelterName = {shelterName}/>
+      <UpdateShelter shelterShelter = {shelterName} />
     </section>
   );
 }

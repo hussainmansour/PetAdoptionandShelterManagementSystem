@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 
-const ShelterModal = ({ isOpen, closeModal, func }) => {
+const ShelterModal = ({ isOpen, closeModal }) => {
   const [shetlerName, setShelterName] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [location, setLocation] = useState("");

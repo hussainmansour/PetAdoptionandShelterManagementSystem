@@ -1,46 +1,28 @@
 import { React, useState } from "react";
 
-const StaffModal = ({ isOpen, closeModal }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const UpdateModal = ({ isOpen, closeModal }) => {
+  const [shetlerName, setShelterName] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const [role, setRole] = useState("");
+  const [location, setLocation] = useState("");
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleShelterNameChange = (e) => {
+    setShelterName(e.target.value);
   };
 
   const handleContactNoChange = (e) => {
     setContactNo(e.target.value);
   };
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
+  const handleLocationChange = (e) => {
+    setLocation(e.target.value);
   };
-  
+
   const handleSave = async () => {};
 
   const cancelSave = () => {
-    setUsername("");
-    setPassword("");
-    setFirstName("");
-    setLastName("");
+    setShelterName("");
     setContactNo("");
-    setRole("Reviewer");
+    setLocation("");
     closeModal();
   };
 
@@ -73,44 +55,15 @@ const StaffModal = ({ isOpen, closeModal }) => {
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-headline"
                 >
-                  Add a new staff member
+                  Update Shelter Details
                 </h3>
                 <div className="mt-2">
                   <input
                     type="text"
-                    value={username}
-                    onChange={handleUsernameChange}
+                    value={shetlerName}
+                    onChange={handleShelterNameChange}
                     className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                    placeholder="Enter username"
-                  />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                    placeholder="Enter password"
-                  />
-                   <select
-                    value={role}
-                    onChange={handleRoleChange}
-                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                  >
-                    <option value="Reviewer">Reviewer</option>
-                    <option value="Co-Manager">Co-Manager</option>
-                  </select>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={handleFirstNameChange}
-                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                    placeholder="Enter first name"
-                  />
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={handleLastNameChange}
-                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                    placeholder="Enter last name"
+                    placeholder="Enter shelter name"
                   />
                   <input
                     type="text"
@@ -118,6 +71,13 @@ const StaffModal = ({ isOpen, closeModal }) => {
                     onChange={handleContactNoChange}
                     className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
                     placeholder="Enter contact number"
+                  />
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={handleLocationChange}
+                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
+                    placeholder="Enter location"
                   />
                 </div>
               </div>
@@ -143,4 +103,4 @@ const StaffModal = ({ isOpen, closeModal }) => {
   );
 };
 
-export default StaffModal;
+export default UpdateModal;
