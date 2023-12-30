@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import ShelterModal from "./ShelterModal";
 
-function CreateShelter() {
+function CreateShelter(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -22,7 +22,7 @@ function CreateShelter() {
       >
         Create a new Shelter
       </button>
-      <ShelterModal isOpen={isModalOpen} closeModal={closeModal} />
+      <ShelterModal isOpen={isModalOpen} closeModal={closeModal} refetchFunc={props.func}/>
     </div>
   );
 }

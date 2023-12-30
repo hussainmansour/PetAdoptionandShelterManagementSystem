@@ -60,7 +60,7 @@ public class ShelterServiceImpl implements ShelterService {
 
     @Override
     public List<Shelter> getManagerShelters(String managerUserName) {
-        Manager manager = (Manager) managerRepository.findAllById(Collections.singleton(managerUserName));
+        Manager manager = managerRepository.findById(managerUserName).orElseThrow();
         return shelterRepository.findByManagerUsername(manager);
     }
 

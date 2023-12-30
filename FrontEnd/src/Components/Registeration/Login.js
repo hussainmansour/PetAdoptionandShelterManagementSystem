@@ -1,10 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GetAuthDataFn from "./../../Routes/Wrapper";
+import { GetAuthDataFn } from "./../../Routes/Wrapper";
+import { login } from "./../../Services/RegisterationService";
+import Cookies from "js-cookie";
+import {
+  adopterPrivilege,
+  managerPrivilege,
+  staffPrivilege,
+} from "../../Routes/routes";
 
-function Login(props) {
+function Login() {
   const navigate = useNavigate();
   const { setPerson } = GetAuthDataFn();
+
+  const navigateTo = (role) => {
+    if (role === adopterPrivilege) {
+      navigate("/adopter");
+    } else if (role === managerPrivilege) {
+      navigate("/shelter-manager");
+    } else if (role === staffPrivilege) {
+      navigate("/staff-member");
+    }
+  };
+
+  useEffect(() => {
+    const tokenFromCookie = Cookies.get("token");
+    if (tokenFromCookie) {
+      const decodedToken = atob(tokenFromCookie.split(".")[1]);
+      const role = JSON.parse(decodedToken).role;
+      const username = JSON.parse(decodedToken).sub;
+      setPerson({
+        isAuthorized: true,
+        username: username,
+        privilege: role,
+        personObj: {},
+      });
+      navigateTo(role);
+    }
+  }, []);
 
   const [info, setInfo] = useState({
     username: "",
@@ -22,6 +55,25 @@ function Login(props) {
 
   const handleSubmit = async (e) => {
     console.log(info.username, info.password, info.role);
+    const response = await login({
+      username: info.username,
+      password: info.password,
+    });
+    if (response === "failed") {
+      alert("Wrong username or password");
+      return;
+    } else {
+      Cookies.set("token", response, { expires: 7 });
+      const decodedToken = atob(response.split(".")[1]);
+      const role = JSON.parse(decodedToken).role;
+      setPerson({
+        isAuthorized: true,
+        username: info.username,
+        privilege: role,
+        personObj: {},
+      });
+      navigateTo(role);
+    }
   };
 
   return (
@@ -138,7 +190,7 @@ function Login(props) {
               {/*-----------------------------------signup - forget password------------------------------------------*/}
               <div className="flex items-center justify-between">
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet? 
+                  Don’t have an account yet?
                   <Link
                     to="/sign-up"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"

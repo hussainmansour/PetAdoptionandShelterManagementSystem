@@ -1,6 +1,8 @@
 import { React, useState } from "react";
+import { insertStaff } from "../../Services/ShelterService";
+import Cookies from "js-cookie";
 
-const StaffModal = ({ isOpen, closeModal }) => {
+const StaffModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -32,7 +34,28 @@ const StaffModal = ({ isOpen, closeModal }) => {
     setRole(e.target.value);
   };
   
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    if( await insertStaff({
+      userName: username,
+      password: password,
+      fname: firstName,
+      lname: lastName,
+      contactNo: contactNo,
+      shelterName: shelterName,
+      role: role,
+    }, Cookies.get("token")) === "Staff is already exists") {
+      alert("Staff is already exists"); 
+    } else {
+      setUsername("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
+      setContactNo("");
+      setRole("Reviewer");
+      closeModal();
+      await refetchFunc();    
+    }
+  };
 
   const cancelSave = () => {
     setUsername("");
