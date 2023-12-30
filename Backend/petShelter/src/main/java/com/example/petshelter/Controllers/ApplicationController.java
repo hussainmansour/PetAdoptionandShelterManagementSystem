@@ -52,6 +52,20 @@ public class ApplicationController {
         }
     }
 
+    @GetMapping("/pending")
+    public ResponseEntity<List<ApplicationDTO>> getPendingApplications(@RequestParam String shelterName) {
+        try {
+            List<ApplicationDTO> applications = applicationService.getPendingApplication(shelterName);
+            System.out.println(applications.size());
+            return ResponseEntity.ok(applications);
+        } catch (Exception e) {
+            List<ApplicationDTO> result = new ArrayList<>();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+    }
+
+
+
     @GetMapping("/records")
     public ResponseEntity<List<ApplicationDTO>> getApplicationsRecords(@RequestParam String adopterUserName) {
         try {

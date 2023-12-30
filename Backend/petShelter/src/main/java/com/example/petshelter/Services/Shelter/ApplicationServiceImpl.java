@@ -87,6 +87,22 @@ public class ApplicationServiceImpl implements ApplicationService {
         return dto;
     }
 
+    public List<ApplicationDTO> getPendingApplication(String shelterName){
+        List<Application> result =  applicationRepository.findAllPendingApplicationsOrderByDate(shelterName);
+
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(application.getAdopterUsername().getAdopterUsername())
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
+    }
+
 
     public List<ApplicationDTO> getAcceptedOrRefusedApplication(String adopterUserName){
         List<Application> result = applicationRepository.findAllAcceptedOrRefusedApplicationsOrderByDate(adopterUserName);

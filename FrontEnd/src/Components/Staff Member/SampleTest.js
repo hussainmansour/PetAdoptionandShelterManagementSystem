@@ -3,22 +3,30 @@ import logo from "../Shelter Manager/Assets/header.png";
 import UpdateStaff from "./UpdateStaff";
 import { useNavigate } from "react-router";
 import { GetAuthDataFn } from "./../../Routes/Wrapper";
+import { getShelterName } from "../../Services/StaffService";
+import Cookies from "js-cookie";
+import { useQuery } from "react-query";
 
 function StaffMember() {
   const nav = useNavigate();
   const { person } = GetAuthDataFn();
+  const { data, error } = useQuery(
+    "fetchShelterName",
+    () => getShelterName(person.username, Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+  );
 
   const navigateToPets = () => {
-    nav(`/Pets?name=${person.username}`);
-  }
+    nav(`/Pets?name=${person.username}&&shelter=${data}`);
+  };
 
   const navigateTpApplications = () => {
-    nav(`/Applications?name=${person.username}`);
-  }
+    nav(`/Applications?name=${person.username}&&shelter=${data}`);
+  };
 
   const navigateToRecords = () => {
-    nav(`/Records?name=${person.username}`);
-  }
+    nav(`/Records?name=${person.username}&&shelter=${data}`);
+  };
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen min-w-full">
@@ -61,21 +69,27 @@ function StaffMember() {
         <button
           type="button"
           className="w-1/6  focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={() => {navigateToPets()}}
+          onClick={() => {
+            navigateToPets();
+          }}
         >
           Pets
         </button>
         <button
           type="button"
           className="w-1/6 focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={() => {navigateTpApplications()}}
+          onClick={() => {
+            navigateTpApplications();
+          }}
         >
           Applications
         </button>
         <button
           type="button"
           className="w-1/6 focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={() => {navigateToRecords()}}
+          onClick={() => {
+            navigateToRecords();
+          }}
         >
           Records
         </button>

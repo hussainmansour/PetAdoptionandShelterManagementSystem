@@ -11,7 +11,7 @@ import java.util.List;
 public interface ApplicationService {
     public List<ApplicationDTO> getAllApplication();
     public List<ApplicationDTO> getPetApplication(Integer petId);
-
+    public List<ApplicationDTO> getPendingApplication(String shelterName);
     public List<ApplicationDTO> getAdopterApplication(String adopterUserName);
     public List<ApplicationDTO> getAcceptedApplication(String adopterUserName);
 

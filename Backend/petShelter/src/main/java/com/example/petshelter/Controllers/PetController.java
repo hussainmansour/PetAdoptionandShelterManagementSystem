@@ -23,9 +23,10 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    @GetMapping("/all")
+    @PostMapping("/getAll")
     public ResponseEntity<Page<SearchPetDTO>> getAllPets(@RequestBody GetPetsDTO getPetsDTO) {
         System.out.println("here");
+        System.out.println(petService.getAllPets(getPetsDTO));
         return petService.getAllPets(getPetsDTO);
     }
 

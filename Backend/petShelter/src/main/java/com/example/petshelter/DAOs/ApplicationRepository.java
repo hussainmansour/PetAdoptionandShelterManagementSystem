@@ -15,7 +15,8 @@ public interface ApplicationRepository extends JpaRepository<Application, Applic
 
 
 
-
+    @Query("SELECT a FROM Application a WHERE a.status = 'Pending' and a.pet.shelterName.name = :shelterName ORDER BY a.date")
+    List<Application> findAllPendingApplicationsOrderByDate(@Param("shelterName") String shelterName);
     @Query("SELECT a FROM Application a WHERE a.pet.id = :petId")
     List<Application> findApplicationsByPet(@Param("petId") Integer petId);
 

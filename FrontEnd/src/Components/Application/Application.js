@@ -1,109 +1,28 @@
 import React from "react";
 import logo from "../Shelter Manager/Assets/header.png";
+import { useQuery } from "react-query";
+import Cookies from "js-cookie";
+import { updateApplication, fetchPendingApplications } from "../../Services/StaffService";
 
 function Application(props) {
 
-  const data = [
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    // Add more objects as needed for additional rows of data
-  ];
-  const isLoading = false;
+  // pending applications
+  const { data, isLoading, refetch } = useQuery(
+    "fetchPendingApplications",
+    () => fetchPendingApplications("Codeforces", Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+  );
 
-  const handleAccept = (app) => {
-    console.log(app.username, app.petId);
+  const handleAccept = async (username, petId, status)  => {
+    await updateApplication(username, petId, status, Cookies.get("token"));
+    await refetch();
+    console.log(username, petId);
   };
 
-  const handleReject = (app) => {
-    console.log(app.username, app.petId);
+  const handleReject = async (username, petId, status)  => {
+    await updateApplication(username, petId, status, Cookies.get("token"));
+    await refetch();
+    console.log(username, petId);
   };
 
   return (
@@ -169,7 +88,7 @@ function Application(props) {
                           data-dropdown-toggle={`user-${index}-dropdown`}
                           className="bg-csut items-center p-0.5 text-lg font-medium w-2/3 text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-customGreen dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
                           type="button"
-                          onClick={() => handleAccept(app)}
+                          onClick={() => handleAccept(app.username, app.petId, "Accepted")}
                         >
                           Accept
                         </button>
@@ -180,7 +99,7 @@ function Application(props) {
                           data-dropdown-toggle={`user-${index}-dropdown`}
                           className="bg-csut items-center p-0.5 text-lg w-2/3 font-medium text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-red-500 dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
                           type="button"
-                          onClick={() => handleReject(app)}
+                          onClick={() => handleReject(app.username, app.petId, "Rejected")}
                         >
                           Reject
                         </button>

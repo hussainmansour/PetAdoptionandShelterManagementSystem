@@ -55,11 +55,29 @@ export const getShelterName = async (staffName, token) => {
   );
 };
 
+export const fetchPendingApplications = async (data, token) => {
+  console.log(data);
+  console.log(token);
+  return handleRequest(
+    axios.get("http://localhost:8081/test/applications/pending?shelterName=" + data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+};
+
+
 export const fetchPets = async (data, token) => {
   console.log(data);
   console.log(token);
   return handleRequest(
-    axios.get("http://localhost:8081/test/pets/all", data));
+    axios.post("http://localhost:8081/test/pets/getAll", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
 }
 
 export const addPet = async (data, token) => {
@@ -67,6 +85,31 @@ export const addPet = async (data, token) => {
   console.log(token);
   return handleRequest(
     axios.post("http://localhost:8081/test/pets/insert", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+}
+
+
+export const updateApplication = async (data, token) => {
+  console.log(data);
+  console.log(token);
+  return handleRequest(
+    axios.post("http://localhost:8081/test/applications/update", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+}
+
+export const insertApplication = async (data, token) => {
+  console.log(data);
+  console.log(token);
+  return handleRequest(
+    axios.post("http://localhost:8081/test/applications/insert", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

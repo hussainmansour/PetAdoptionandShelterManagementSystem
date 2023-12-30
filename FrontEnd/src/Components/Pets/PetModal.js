@@ -60,6 +60,7 @@ const PetModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
         behavior: behavior,
         description: description,
         healthStatus: healthStatus,
+        gender: gender,
       },
       Cookies.get("token")
     );

@@ -9,8 +9,8 @@ export const GetAuthDataFn = () => useContext(AuthContext);
 const defaultPersonState = () => {
   return {
     isAuthorized: false,
-    username: "",
-    privilege: globalPrivilege,
+    username: "asdfa",
+    privilege: adopterPrivilege,
     personObj: {}
   };
 };

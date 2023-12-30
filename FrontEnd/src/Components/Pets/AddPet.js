@@ -22,7 +22,7 @@ function AddPet(props) {
       >
         Add a new Pet
       </button>
-      <PetModal isOpen={isModalOpen} closeModal={closeModal} shelterName={props.shelterName}/>
+      <PetModal isOpen={isModalOpen} closeModal={closeModal} shelterName={props.shelterName} refetchFunc={props.refetch}/>
     </div>
   );
 }

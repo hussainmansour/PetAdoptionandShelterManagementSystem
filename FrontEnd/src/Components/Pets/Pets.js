@@ -11,55 +11,24 @@ function Pets(props) {
   const location = useLocation();
   const staffInfo = new URLSearchParams(location.search);
   const staffName = staffInfo.get("name");
-  
-  const {
-    data: shelterName,
-    error1,
-  } = useQuery(
-    "fetchShelterName",
-    () => getShelterName(staffName, Cookies.get("token")),
-    { refetchOnWindowFocus: false }
-    );
-    
-    
-    const request = {
+  const shelterName = staffInfo.get("shelter");
+
+  const { data, isLoading, refetch } = useQuery(
+    "fetchPetsinshelter",
+    () => fetchPets({
       pageNo: 0,
       criteria: [
-        { first: "shelterName", second: "Codeforces" },
-        { first: "isAdopted", second: false },
-      ],
-    }
+        { "first": "shelterName", "second": "Codeforces"},
+        { "first": "isAdopted", "second": false },
+      ]
+    }, Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+  );
 
-    const {
-      data,
-      isLoading2,
-      error2,
-      refetch,
-    } = useQuery(
-      "fetchPets",
-      () => fetchPets(request, Cookies.get("token")),
-      { refetchOnWindowFocus: false }
-      );
-      
-      if (error1 || error2) {
-    return <p>Error: {error1.message}</p>;
-  }
-
-  /*
-  {
-    "pageNo" : 0,
-    "criteria" : [{"first" : "shelterName" , "second" : "shelter"} ,  , {"first" : "isAdopted" , "second" : false}]
-}
-  */
-
-  const handleAccept = (app) => {
-    console.log(app.username, app.petId);
-  };
-
-  const handleReject = (app) => {
-    console.log(app.username, app.petId);
-  };
-
+  const handleUpdate = (app) => {
+    console.log(app);
+  };  
+  
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 min-h-screen">
       <img
@@ -100,21 +69,21 @@ function Pets(props) {
                   </th>
                 </tr>
               </thead>
-              {/* <tbody>
-                {isLoading2 ? (
+              <tbody>
+                {isLoading ? (
                   // skeletonLoading
                   <Loading />
                 ) : (
                   // quetions and answers
-                  data.map((app, index) => (
+                  data.content.map((app, index) => (
                     <tr
                       key={index}
                       className="border-b text-lg dark:border-gray-700 text-gray-400"
                     >
-                      <td className="px-4 py-3">{app.username}</td>
-                      <td className="px-4 py-3">{app.contactNumber}</td>
-                      <td className="px-4 py-3">{app.dateOfApplication}</td>
-                      <td className="px-4 py-3">{app.petName}</td>
+                      <td className="px-4 py-3">{app.gender}</td>
+                      <td className="px-4 py-3">{app.shelterName}</td>
+                      <td className="px-4 py-3">{app.date}</td>
+                      <td className="px-4 py-3">{app.name}</td>
                       <td className="px-4 py-3">{app.petId}</td>
                       <td className="px-4 py-3">
                         <button
@@ -122,20 +91,20 @@ function Pets(props) {
                           data-dropdown-toggle={`user-${index}-dropdown`}
                           className="bg-csut items-center p-0.5 text-lg font-medium w-2/3 text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-customGreen dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
                           type="button"
-                          onClick={() => handleAccept(app)}
+                          onClick={() => handleUpdate(app)}
                         >
                           Update Pet
                         </button>
                       </td>
                     </tr>
                   ))
-                )} */}
-              {/* </tbody> */}
+                )}
+              </tbody>
             </table>
           </div>
         </div>
       </div>
-      <AddPet shelterName={shelterName}/>
+      <AddPet shelterName={shelterName} refetch={refetch}/>
     </section>
   );
 }
