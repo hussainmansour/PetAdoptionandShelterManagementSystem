@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import StaffModal from "./StaffModal";
 
-function AddStaff() {
+function AddStaff(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -22,7 +22,7 @@ function AddStaff() {
       >
         Add a new Staff Member
       </button>
-      <StaffModal isOpen={isModalOpen} closeModal={closeModal} />
+      <StaffModal isOpen={isModalOpen} closeModal={closeModal} shelterName = {props.shelterName} refetchFunc = {props.func}/>
     </div>
   );
 }

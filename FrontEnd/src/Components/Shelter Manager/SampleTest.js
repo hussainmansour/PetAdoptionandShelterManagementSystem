@@ -3,55 +3,28 @@ import CreateShelter from "./CreateShelter";
 import logo from "./Assets/header.png";
 import ShelterCard from "./ShelterCard";
 import Loading from "./Loading";
+import { useQuery } from "react-query";
 import { GetAuthDataFn } from "../../Routes/Wrapper";
+import { fetchManagerShelters } from "../../Services/ShelterService";
+import Cookies from "js-cookie";
 
 function ManagerGroups() {
+  
+  const { person } = GetAuthDataFn();
+  const { data, isLoading, error, refetch } = useQuery(
+    "fetchShelters",
+    () => fetchManagerShelters(person.username, Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+  );
 
-  const { person, setPerson } = GetAuthDataFn();
 
   useEffect(() => {
-    setPerson({
-      isAuthorized: true,
-      username: "Amr Ahmed",
-      privilege: "MANAGER",
-      personObj: {}
-    });
-  }, []);
+    console.log(data);
+  }, [data]);
 
-  const data = [
-    {
-      shelterName: "First Shelter",
-      contactNo: "111-111-1111",
-      location: "123 Street, City A, Country X"
-    },
-    {
-      shelterName: "Second Shelter",
-      contactNo: "222-222-2222",
-      location: "456 Avenue, City B, Country Y"
-    },
-    {
-      shelterName: "Third Shelter",
-      contactNo: "333-333-3333",
-      location: "789 Road, City C, Country Z"
-    },
-    {
-      shelterName: "First Shelter",
-      contactNo: "111-111-1111",
-      location: "123 Street, City A, Country X"
-    },
-    {
-      shelterName: "Second Shelter",
-      contactNo: "222-222-2222",
-      location: "456 Avenue, City B, Country Y"
-    },
-    {
-      shelterName: "Third Shelter",
-      contactNo: "333-333-3333",
-      location: "789 Road, City C, Country Z"
-    }
-  ];
-
-  const isLoading = false;
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen min-w-full">
@@ -78,7 +51,7 @@ function ManagerGroups() {
             <span>new staff members to a specific shelter.</span>
           </div>
 
-          <CreateShelter />
+          <CreateShelter func={refetch} />
         </div>
         <img
           src={logo}
@@ -89,24 +62,24 @@ function ManagerGroups() {
 
       <hr className="border-b-2 mb-20 border-gray-500 w-4/5 mx-auto" />
       <ul className="pb-20">
-            {isLoading ? (
-              // skeletonLoading
-              <div className="ml-44">
-                <Loading />
-              </div>
-            ) : (
-              data.map((item, index) => (
-                <li className="text-left mb-16">
-                  <ShelterCard
-                    shelterName={item.shelterName}
-                    ownerUsername={person.username}
-                    contactNo={item.contactNo}
-                    location={item.location}
-                  />{" "}
-                </li>
-              ))
-            )}
-          </ul>
+        {isLoading ? (
+          // skeletonLoading
+          <div className="ml-44">
+            <Loading />
+          </div>
+        ) : (
+          data.map((item, index) => (
+            <li className="text-left mb-16">
+              <ShelterCard
+                shelterName={item.shelterName}
+                ownerUsername={person.username}
+                contactNo={item.contactNo}
+                location={item.location}
+              />{" "}
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
 }
