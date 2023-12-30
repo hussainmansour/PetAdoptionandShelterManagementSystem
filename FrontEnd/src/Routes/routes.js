@@ -3,8 +3,11 @@ import Signup from "../Components/Registeration/Signup";
 import Error from "../Components/Error/Error";
 import SampleTest1 from "../Components/Adopter/SampleTest";
 import ManagerGroups from "../Components/Shelter Manager/SampleTest";
-import SampleTest3 from "../Components/Staff Member/SampleTest";
+import StaffMember from "../Components/Staff Member/SampleTest";
 import Shelter from "../Components/Shelter Manager/Shelter";
+import Application from "../Components/Application/Application";
+import Records from "../Components/Application/Records";
+import Pets from "../Components/Pets/Pets";
 
 export const globalPrivilege = "GLOBAL";
 export const adopterPrivilege = "ADOPTER";
@@ -46,11 +49,29 @@ export const nav = [
         element: <Shelter />,
         status: managerPrivilege
    },
+   {
+        path: "/Pets",
+        Title: "Pets",
+        element: <Pets />,
+        status: staffPrivilege
+   },
+   {
+        path: "/Applications",
+        Title: "Applications",
+        element: <Application />,
+        status: staffPrivilege
+   },
+   {
+        path: "/Records",
+        Title: "Records",
+        element: <Records />,
+        status: staffPrivilege
+   },
     // staff member
    {
         path: "/staff-member",
         Title: "Staff Member",
-        element: <SampleTest3 />,
+        element: <StaffMember />,
         status: staffPrivilege
    },
    // error page

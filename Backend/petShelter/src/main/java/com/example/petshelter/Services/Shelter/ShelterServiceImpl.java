@@ -6,6 +6,7 @@ import com.example.petshelter.DAOs.ShelterRepository;
 import com.example.petshelter.DAOs.StaffRepository;
 import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.DTOs.StaffDTO;
+import com.example.petshelter.DTOs.UpdateStaffDTO;
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Models.Staff;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Collections;
 import java.util.List;
@@ -111,7 +113,7 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     @Override
-    public String updateStaffMember(@Valid StaffDTO staff){
+    public String updateStaffMember(UpdateStaffDTO staff){
         try {
             if(staffRepository.existsById(staff.getUserName())){
                 Staff staff1 = staffRepository.findById(staff.getUserName()).orElseThrow();

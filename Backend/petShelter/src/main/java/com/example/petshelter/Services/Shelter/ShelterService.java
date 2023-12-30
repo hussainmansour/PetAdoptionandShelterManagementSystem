@@ -2,6 +2,7 @@ package com.example.petshelter.Services.Shelter;
 
 import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.DTOs.StaffDTO;
+import com.example.petshelter.DTOs.UpdateStaffDTO;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Models.Staff;
 import jakarta.validation.Valid;
@@ -21,5 +22,5 @@ public interface ShelterService {
 
     String addStaffMember(@Valid StaffDTO staff);
 
-    String updateStaffMember(@Valid StaffDTO staff);
+    String updateStaffMember(@Valid UpdateStaffDTO staff);
 }
