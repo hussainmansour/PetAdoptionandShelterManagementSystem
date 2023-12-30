@@ -67,22 +67,14 @@ public class PetSerivceImpl implements PetService{
 
         for(RelationList c : criteria){
             FilterCriteria filterCriteria = filterFactory.getFilterCriteria(c);
-            System.out.println(c.first);
             pets = pets.and(filterCriteria.meetCriteria());
-            System.out.println("done");
-            System.out.println(pets);
         }
         return pets;
-
     }
     public ResponseEntity<Page<SearchPetDTO>> getAllPets(GetPetsDTO getPetsDTO){
         try {
             Pageable pageable = PageRequest.of(getPetsDTO.getPageNo(), 10);
-            Specification<Pet> temp0 = getSpecification(getPetsDTO.getCriteria());
-            List<Pet> temp = petRepository.findAll( temp0);
-            System.out.println(temp.size());
             Page<Pet> petsPage =  petRepository.findAll( getSpecification(getPetsDTO.getCriteria()) , pageable);
-            System.out.println(petsPage.getSize());
             if (petsPage.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
