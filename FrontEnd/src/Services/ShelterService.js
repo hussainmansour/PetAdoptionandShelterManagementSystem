@@ -44,6 +44,7 @@ export const fetchShelterStaffs = async (shelterName, token) => {
 };
 
 export const insertStaff = async (data, token) => {
+  console.log(data);
   return handleRequest(
     axios.post(serverHost + "/addStaffMember", data, {
       headers: {
@@ -51,4 +52,13 @@ export const insertStaff = async (data, token) => {
     })
   );
 };
+
+export const updateShelter = async (data, token) => {
+  return handleRequest(
+    axios.post(serverHost + "/update", data, {
+      headers: {
+        Authorization: `Bearer ${token}` },
+    })
+  );
+}
 

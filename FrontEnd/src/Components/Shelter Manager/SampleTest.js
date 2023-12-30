@@ -17,11 +17,6 @@ function ManagerGroups() {
     { refetchOnWindowFocus: false }
   );
 
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   if (error) {
     return <p>Error: {error.message}</p>;
   }

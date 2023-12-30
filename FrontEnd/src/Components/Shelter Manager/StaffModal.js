@@ -43,8 +43,9 @@ const StaffModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
       contactNo: contactNo,
       shelterName: shelterName,
       role: role,
-    }, Cookies.get("token")) === "Staff is already exists") {
-      alert("Staff is already exists"); 
+    }, Cookies.get("token")) === "Staff member already exists") {
+      closeModal();
+      alert("Staff member already exists"); 
     } else {
       setUsername("");
       setPassword("");
