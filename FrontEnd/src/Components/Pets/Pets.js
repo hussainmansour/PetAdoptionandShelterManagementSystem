@@ -1,7 +1,14 @@
 import React from "react";
 import logo from "../Shelter Manager/Assets/header.png";
+import { useLocation } from "react-router-dom";
+import Loading from "../Shelter Manager/Loading";
+import AddPet from "./AddPet";
 
 function Pets(props) {
+
+  const location = useLocation();
+  const staffInfo = new URLSearchParams(location.search);
+  const staffName = staffInfo.get("name");
 
   const data = [
     {
@@ -98,6 +105,13 @@ function Pets(props) {
   ];
   const isLoading = false;
 
+  /*
+  {
+    "pageNo" : 0,
+    "criteria" : [{"first" : "shelterName" , "second" : "shelter"} ,  , {"first" : "isAdopted" , "second" : false}]
+}
+  */
+
   const handleAccept = (app) => {
     console.log(app.username, app.petId);
   };
@@ -125,10 +139,10 @@ function Pets(props) {
               <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-4 py-3">
-                    username
+                    Gender
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    contact number
+                    Shelter Name
                   </th>
                   <th scope="col" className="px-4 py-3">
                     date
@@ -140,17 +154,14 @@ function Pets(props) {
                     pet id
                   </th>
                   <th scope="col" className="px-4 py-3">
-                    Accept
-                  </th>
-                  <th scope="col" className="px-4 py-3">
-                    Reject
+                    Update
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   // skeletonLoading
-                  <div className="ml-44"></div>
+                  <Loading />
                 ) : (
                   // quetions and answers
                   data.map((app, index) => (
@@ -171,18 +182,7 @@ function Pets(props) {
                           type="button"
                           onClick={() => handleAccept(app)}
                         >
-                          Accept
-                        </button>
-                      </td>
-                      <td className="px-4 py-3">
-                        <button
-                          id={`user-${index}-dropdown-button`}
-                          data-dropdown-toggle={`user-${index}-dropdown`}
-                          className="bg-csut items-center p-0.5 text-lg w-2/3 font-medium text-center text-white hover:text-gray-800 rounded-lg dark:text-white dark:bg-red-500 dark:hover:text-black dark:focus:ring-2 dark:focus:ring-slate-500 dark:focus:ring-offset-2"
-                          type="button"
-                          onClick={() => handleReject(app)}
-                        >
-                          Reject
+                          Update Pet
                         </button>
                       </td>
                     </tr>
@@ -193,6 +193,7 @@ function Pets(props) {
           </div>
         </div>
       </div>
+      <AddPet />
     </section>
   );
 }

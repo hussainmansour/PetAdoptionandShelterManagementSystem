@@ -49,11 +49,29 @@ export const nav = [
         element: <Shelter />,
         status: managerPrivilege
    },
+   {
+        path: "/Pets",
+        Title: "Pets",
+        element: <Pets />,
+        status: staffPrivilege
+   },
+   {
+        path: "/Applications",
+        Title: "Applications",
+        element: <Application />,
+        status: staffPrivilege
+   },
+   {
+        path: "/Records",
+        Title: "Records",
+        element: <Records />,
+        status: staffPrivilege
+   },
     // staff member
    {
         path: "/staff-member",
         Title: "Staff Member",
-        element: <Pets />,
+        element: <StaffMember />,
         status: staffPrivilege
    },
    // error page

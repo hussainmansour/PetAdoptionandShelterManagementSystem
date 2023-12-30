@@ -1,9 +1,24 @@
 import React from "react";
 import logo from "../Shelter Manager/Assets/header.png";
 import UpdateStaff from "./UpdateStaff";
+import { useNavigate } from "react-router";
+import { GetAuthDataFn } from "./../../Routes/Wrapper";
 
 function StaffMember() {
-  const isLoading = false;
+  const nav = useNavigate();
+  const { person } = GetAuthDataFn();
+
+  const navigateToPets = () => {
+    nav(`/Pets?name=${person.username}`);
+  }
+
+  const navigateTpApplications = () => {
+    nav(`/Applications?name=${person.username}`);
+  }
+
+  const navigateToRecords = () => {
+    nav(`/Records?name=${person.username}`);
+  }
 
   return (
     <div className="bg-gradient-to-r from-slate-800 to-gray-900 min-h-screen min-w-full">
@@ -46,14 +61,23 @@ function StaffMember() {
         <button
           type="button"
           className="w-1/6  focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={() => {navigateToPets()}}
         >
           Pets
         </button>
         <button
           type="button"
           className="w-1/6 focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={() => {navigateTpApplications()}}
         >
           Applications
+        </button>
+        <button
+          type="button"
+          className="w-1/6 focus:outline-none text-white focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl  py-5 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={() => {navigateToRecords()}}
+        >
+          Records
         </button>
       </div>
     </div>

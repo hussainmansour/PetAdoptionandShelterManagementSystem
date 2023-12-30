@@ -2,6 +2,7 @@ package com.example.petshelter.Controllers;
 
 import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.DTOs.StaffDTO;
+import com.example.petshelter.DTOs.UpdateStaffDTO;
 import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Models.Staff;
@@ -93,12 +94,6 @@ public class ShelterController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/updateStaffMember")
-    public ResponseEntity<String> updateStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
-        System.out.println("here");
-        String result = shelterService.updateStaffMember(staffDTO);
-        return ResponseEntity.ok(result);
-    }
 
     // Add more endpoints as needed...
 

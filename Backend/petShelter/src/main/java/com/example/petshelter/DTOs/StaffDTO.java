@@ -14,14 +14,10 @@ public class StaffDTO {
     @NotNull
     @NotBlank
     private String userName;
-    @NotNull
-    @NotBlank
     private String password;
     private String fname;
     private String lname;
     private String contactNo;
-    @NotNull
-    @NotBlank
     private String shelterName;
     private String role;
 }

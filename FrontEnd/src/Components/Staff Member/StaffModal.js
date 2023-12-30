@@ -1,10 +1,14 @@
 import { React, useState } from "react";
+import { updateStaffMember } from "../../Services/StaffService";
+import Cookies from "js-cookie";
+import { GetAuthDataFn } from "../../Routes/Wrapper";
 
 const StaffModal = ({ isOpen, closeModal }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [contactNo, setContactNo] = useState("");
-
+  const { person } = GetAuthDataFn();
+  
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
   };
@@ -17,8 +21,19 @@ const StaffModal = ({ isOpen, closeModal }) => {
     setContactNo(e.target.value);
   };
 
-  const handleSave = async () => {};
-
+  const handleSave = async () => {
+   await updateStaffMember({
+      userName: person.username,
+      fname: firstName,
+      lname: lastName,
+      contactNo: contactNo,
+    }, Cookies.get("token")) 
+      setFirstName("");
+      setLastName("");
+      setContactNo("");
+      closeModal();  
+    }
+  
   const cancelSave = () => {
     setFirstName("");
     setLastName("");
