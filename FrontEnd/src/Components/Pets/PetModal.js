@@ -1,10 +1,12 @@
 import { React, useState } from "react";
+import { addPet } from "../../Services/StaffService";
+import Cookies from "js-cookie";
 
 const PetModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
   const [name, setName] = useState("");
   const [species, setSpecies] = useState("");
   const [breed, setBreed] = useState("");
-  const [date, setDate] = useState("");
+  const [dateOfBirth, setdateOfBirth] = useState("");
   const [gender, setGender] = useState("");
   const [healthStatus, setHealthStatus] = useState("");
   const [behavior, setBehavior] = useState("");
@@ -24,7 +26,7 @@ const PetModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
   };
 
   const handleDateChange = (e) => {
-    setDate(e.target.value);
+    setdateOfBirth(e.target.value);
   };
 
   const handleGenderChange = (e) => {
@@ -47,13 +49,38 @@ const PetModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
     setImage(e.target.value);
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    await addPet(
+      {
+        shelterName: shelterName,
+        name: name,
+        species: species,
+        breed: breed,
+        dateOfBirth: dateOfBirth,
+        behavior: behavior,
+        description: description,
+        healthStatus: healthStatus,
+      },
+      Cookies.get("token")
+    );
+    setBehavior("");
+    setDescription("");
+    setHealthStatus("");
+    setImage("");
+    setName("");
+    setSpecies("");
+    setBreed("");
+    setdateOfBirth("");
+    setGender("");
+    closeModal();
+    await refetchFunc();
+  };
 
   const cancelSave = () => {
     setName("");
     setSpecies("");
     setBreed("");
-    setDate("");
+    setdateOfBirth("");
     setGender("");
     setHealthStatus("");
     setBehavior("");
@@ -117,7 +144,7 @@ const PetModal = ({ isOpen, closeModal, shelterName, refetchFunc }) => {
                   />
                   <input
                     type="text"
-                    value={date}
+                    value={dateOfBirth}
                     onChange={handleDateChange}
                     className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
                     placeholder="Enter date"

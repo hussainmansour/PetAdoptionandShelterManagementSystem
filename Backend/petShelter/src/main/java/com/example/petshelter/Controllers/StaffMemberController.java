@@ -1,5 +1,6 @@
 package com.example.petshelter.Controllers;
 
+import com.example.petshelter.DAOs.StaffRepository;
 import com.example.petshelter.DTOs.ShelterDto;
 import com.example.petshelter.DTOs.StaffDTO;
 import com.example.petshelter.DTOs.UpdateStaffDTO;
@@ -25,6 +26,8 @@ public class StaffMemberController {
     @Autowired
     private ShelterService shelterService;
 
+    @Autowired
+    private StaffRepository staffRepository;
     @PostMapping("/updateStaffMember")
     public ResponseEntity<String> updateStaffMember( @RequestBody UpdateStaffDTO staffDTO) {
         System.out.println("here");
@@ -32,6 +35,18 @@ public class StaffMemberController {
         String result = shelterService.updateStaffMember(staffDTO);
         return ResponseEntity.ok(result);
     }
-    // Add more endpoints as needed...
+
+    @GetMapping("/getShelterName/{staffUsername}")
+    public ResponseEntity<String> getShelterName(@PathVariable String staffUsername) {
+        System.out.println(staffUsername);
+        try {
+            staffRepository.findById(staffUsername).orElseThrow();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Staff member not found");
+        }
+        String shelterName = staffRepository.findById(staffUsername).get().getShelterName().getName();
+        return ResponseEntity.ok(shelterName);
+    }
+
 }
 

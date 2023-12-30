@@ -1,109 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../Shelter Manager/Assets/header.png";
 import { useLocation } from "react-router-dom";
 import Loading from "../Shelter Manager/Loading";
 import AddPet from "./AddPet";
+import { fetchPets, getShelterName } from "../../Services/StaffService";
+import Cookies from "js-cookie";
+import { useQuery } from "react-query";
 
 function Pets(props) {
-
   const location = useLocation();
   const staffInfo = new URLSearchParams(location.search);
   const staffName = staffInfo.get("name");
+  
+  const {
+    data: shelterName,
+    error1,
+  } = useQuery(
+    "fetchShelterName",
+    () => getShelterName(staffName, Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+    );
+    
+    
+    const request = {
+      pageNo: 0,
+      criteria: [
+        { first: "shelterName", second: "Codeforces" },
+        { first: "isAdopted", second: false },
+      ],
+    }
 
-  const data = [
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    {
-      username: "JohnDoe123",
-      contactNumber: "123-456-7890",
-      dateOfApplication: "2023-12-28",
-      petId: "001",
-      petName: "Fluffy",
-      description: "Adorable cat",
-      petPictureUrl: "pet_picture_url_1",
-    },
-    {
-      username: "JaneSmith456",
-      contactNumber: "987-654-3210",
-      dateOfApplication: "2023-12-29",
-      petId: "002",
-      petName: "Buddy",
-      description: "Friendly dog",
-      petPictureUrl: "pet_picture_url_2",
-    },
-    // Add more objects as needed for additional rows of data
-  ];
-  const isLoading = false;
+    const {
+      data,
+      isLoading2,
+      error2,
+      refetch,
+    } = useQuery(
+      "fetchPets",
+      () => fetchPets(request, Cookies.get("token")),
+      { refetchOnWindowFocus: false }
+      );
+      
+      if (error1 || error2) {
+    return <p>Error: {error1.message}</p>;
+  }
 
   /*
   {
@@ -128,9 +68,11 @@ function Pets(props) {
         className="fixed pointer-events-none left-80 opacity-25 blur-3xl h-screen"
       />
       <div className="mx-auto max-w-screen opacity-75 pb-10 px-8 ">
-        <div className="text-5xl text-gray-700 bg-gray-50 tracking-widest dark:bg-gray-700 text-center dark:text-gray-400 mt-5 px-4 py-3 rounded-2xl dark:bg-opacity-25">
-          Pets in the Shelter
-        </div>{" "}
+        {shelterName && (
+          <div className="text-5xl text-gray-700 bg-gray-50 tracking-widest dark:bg-gray-700 text-center dark:text-gray-400 mt-5 px-4 py-3 rounded-2xl dark:bg-opacity-25">
+            Pets in the Shelter {shelterName}
+          </div>
+        )}
         {/* table of staff members */}
         <div className="bg-white dark:bg-gray-800 relative mt-12 shadow-md sm:rounded-lg overflow-hidden ">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"></div>
@@ -158,8 +100,8 @@ function Pets(props) {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {isLoading ? (
+              {/* <tbody>
+                {isLoading2 ? (
                   // skeletonLoading
                   <Loading />
                 ) : (
@@ -187,13 +129,13 @@ function Pets(props) {
                       </td>
                     </tr>
                   ))
-                )}
-              </tbody>
+                )} */}
+              {/* </tbody> */}
             </table>
           </div>
         </div>
       </div>
-      <AddPet />
+      <AddPet shelterName={shelterName}/>
     </section>
   );
 }

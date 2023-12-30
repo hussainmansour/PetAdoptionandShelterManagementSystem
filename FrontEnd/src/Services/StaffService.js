@@ -16,7 +16,7 @@ export const updateStaffMember = async (data, token) => {
   console.log(data);
   console.log(token);
   return handleRequest(
-    axios.post(serverHost + "http://localhost:8081/staff/shelters/updateStaffMember", data, {
+    axios.post("http://localhost:8081/staff/shelters/updateStaffMember", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -42,3 +42,34 @@ export const fetchShelterStaffs = async (shelterName, token) => {
     })
   );
 };
+
+export const getShelterName = async (staffName, token) => {
+  console.log(staffName);
+  console.log(token);
+  return handleRequest(
+    axios.get("http://localhost:8081/staff/shelters/getShelterName/" + staffName, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+};
+
+export const fetchPets = async (data, token) => {
+  console.log(data);
+  console.log(token);
+  return handleRequest(
+    axios.get("http://localhost:8081/test/pets/all", data));
+}
+
+export const addPet = async (data, token) => {
+  console.log(data);
+  console.log(token);
+  return handleRequest(
+    axios.post("http://localhost:8081/test/pets/insert", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+}
