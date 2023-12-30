@@ -14,7 +14,7 @@ public class ShelterDto {
     private String managerUsername;
     @NotNull
     @NotBlank
-    private String ShelterName ;
+    private String shelterName ;
     private String location;
     private String contactNo;
 }

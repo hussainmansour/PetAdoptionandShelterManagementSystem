@@ -1,13 +1,12 @@
 import { React, useState } from "react";
+import { updateShelter } from "../../Services/ShelterService";
+import Cookies from "js-cookie";
+import { GetAuthDataFn } from "../../Routes/Wrapper";
 
-const UpdateModal = ({ isOpen, closeModal }) => {
-  const [shetlerName, setShelterName] = useState("");
+const UpdateModal = ({ isOpen, closeModal, shelterName }) => {
   const [contactNo, setContactNo] = useState("");
   const [location, setLocation] = useState("");
-
-  const handleShelterNameChange = (e) => {
-    setShelterName(e.target.value);
-  };
+  const { person } = GetAuthDataFn();
 
   const handleContactNoChange = (e) => {
     setContactNo(e.target.value);
@@ -17,10 +16,20 @@ const UpdateModal = ({ isOpen, closeModal }) => {
     setLocation(e.target.value);
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    await updateShelter(
+      {
+        managerUsername: person.username,
+        shelterName: shelterName,
+        contactNo: contactNo,
+        location: location,
+      },
+      Cookies.get("token")
+    );
+    closeModal();
+  };
 
   const cancelSave = () => {
-    setShelterName("");
     setContactNo("");
     setLocation("");
     closeModal();
@@ -58,13 +67,6 @@ const UpdateModal = ({ isOpen, closeModal }) => {
                   Update Shelter Details
                 </h3>
                 <div className="mt-2">
-                  <input
-                    type="text"
-                    value={shetlerName}
-                    onChange={handleShelterNameChange}
-                    className="w-full border rounded-md px-3 py-2 mt-2 focus:outline-none focus:ring focus:border-blue-300"
-                    placeholder="Enter shelter name"
-                  />
                   <input
                     type="text"
                     value={contactNo}

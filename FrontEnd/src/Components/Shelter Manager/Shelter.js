@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import logo from "./Assets/header.png";
@@ -18,6 +18,10 @@ function Shelter() {
     () => fetchShelterStaffs(shelterName, Cookies.get("token")),
     { refetchOnWindowFocus: false }
   );
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   if (error) {
     return <p>Error: {error.message}</p>;
@@ -72,8 +76,8 @@ function Shelter() {
                       key={index}
                       className="border-b text-lg dark:border-gray-700 text-gray-400"
                     >
-                      <td className="px-4 py-3">{user.firstName}</td>
-                      <td className="px-4 py-3">{user.lastName}</td>
+                      <td className="px-4 py-3">{user.fname}</td>
+                      <td className="px-4 py-3">{user.lname}</td>
                       <td className="px-4 py-3">{user.userName}</td>
                       <td className="px-4 py-3">{user.contactNo}</td>
                       <td className="px-4 py-3">{user.role}</td>
@@ -86,7 +90,7 @@ function Shelter() {
         </div>
       </div>
       <AddStaff shelterName = {shelterName} func = {refetch}/>
-      <UpdateShelter shelterShelter = {shelterName} />
+      <UpdateShelter shelterName = {shelterName} />
     </section>
   );
 }

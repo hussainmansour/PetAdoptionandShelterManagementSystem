@@ -26,7 +26,7 @@ const ShelterModal = ({ isOpen, closeModal, refetchFunc }) => {
     console.log(shetlerName, contactNo, location);
     if( await insertShelter({
       managerUsername: person.username,
-      ShelterName: shetlerName,
+      shelterName: shetlerName,
       contactNo: contactNo,
       location: location,
     }, Cookies.get("token")) === "Shelter is already exists") {

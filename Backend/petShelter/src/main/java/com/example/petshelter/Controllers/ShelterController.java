@@ -42,7 +42,7 @@ public class ShelterController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateShelter(@RequestBody ShelterDto shelterDto) {
-
+        System.out.println("gereeeee" + shelterDto);
         try {
             return ResponseEntity.ok(shelterService.updateShelter(shelterDto));
         } catch (Exception e) {
@@ -76,11 +76,9 @@ public class ShelterController {
         for (Staff staff : shelterStaffs) {
             StaffDTO staffDTO = new StaffDTO();
             staffDTO.setUserName(staff.getStaffUsername());
-            staffDTO.setPassword(staff.getPassword());
             staffDTO.setFname(staff.getFname());
             staffDTO.setLname(staff.getLname());
             staffDTO.setContactNo(staff.getContactNo());
-            staffDTO.setShelterName(staff.getShelterName().getName());
             staffDTO.setRole(staff.getRole());
             staffDTOList.add(staffDTO);
         }
@@ -90,7 +88,7 @@ public class ShelterController {
 
     @PostMapping("/addStaffMember")
     public ResponseEntity<String> addStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
-        System.out.println("here");
+        System.out.println(staffDTO);
         String result = shelterService.addStaffMember(staffDTO);
         return ResponseEntity.ok(result);
     }

@@ -21,7 +21,7 @@ public class Document {
 
     @NotNull
     @Column(name = "file", nullable = false)
-    private byte[] file;
+    private String file;
 
     @Size(max = 45)
     @NotNull
