@@ -19,5 +19,6 @@ public class DatabaseTest {
     @Disabled
     public void testRestore(){
         assertTrue(Database.RestoreDB());
+        
     }
 }
