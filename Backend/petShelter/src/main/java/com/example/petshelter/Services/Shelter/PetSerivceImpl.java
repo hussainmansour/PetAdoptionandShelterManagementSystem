@@ -3,9 +3,10 @@ package com.example.petshelter.Services.Shelter;
 import com.example.petshelter.DAOs.BreedRelationRepository;
 import com.example.petshelter.DAOs.PetRepository;
 import com.example.petshelter.DAOs.ShelterRepository;
-import com.example.petshelter.DTOs.GetPetsDTO;
-import com.example.petshelter.DTOs.PetDTO;
+import com.example.petshelter.DTOs.*;
+import com.example.petshelter.Models.Application;
 import com.example.petshelter.Models.BreedRelation;
+import com.example.petshelter.Models.Document;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.Filters.FilterCriteria;
 import com.example.petshelter.Services.Shelter.Filters.FilterFactory;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,6 +128,58 @@ public class PetSerivceImpl implements PetService{
             existingPet.setIsAdopted(true);
             petRepository.save(existingPet);
         }
+    }
+
+
+    public ProfileDTO getProfile(Integer petId){
+        Pet pet = petRepository.findById(petId).orElseThrow();
+
+        ProfileDTO profileDTO = ProfileDTO.builder()
+                .id(petId)
+                .breed(pet.getBreed().getBreedId())
+                .species(pet.getBreed().getSpecies())
+                .behaviour(pet.getBehaviour())
+                .name(pet.getName())
+                .gender(pet.getGender())
+                .dateOfBirth(pet.getDateOfBirth())
+                .description(pet.getDescription())
+                .isAdopted(pet.getIsAdopted())
+                .applications(mapperApplication(new ArrayList<>( pet.getApplications())))
+                .documents(mapperDocument(new ArrayList<>(pet.getDocuments())))
+                .shelterName(pet.getShelterName().getName())
+                .healthStatus(pet.getHealthStatus())
+                .build();
+
+        return profileDTO;
+
+    }
+
+    private List<ApplicationDTO> mapperApplication(List<Application> result){
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(application.getAdopterUsername().getAdopterUsername())
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
+    }
+
+    private List<DocumentDTO> mapperDocument(List<Document> result){
+
+        List< DocumentDTO> dto = new ArrayList<>();
+        for(Document application: result ){
+            DocumentDTO applicationDTO = DocumentDTO.builder()
+                    .petId(application.getPet().getId())
+                    .file(application.getFile())
+                    .type(application.getType())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
 
 }
