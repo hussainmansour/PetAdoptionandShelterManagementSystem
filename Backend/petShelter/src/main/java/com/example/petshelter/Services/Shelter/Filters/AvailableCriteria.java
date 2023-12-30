@@ -11,6 +11,6 @@ public class AvailableCriteria implements FilterCriteria{
     @Override
     public Specification<Pet> meetCriteria() {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("isAdopted"), "%" + isAdopted + "%");
+                criteriaBuilder.equal(root.get("isAdopted"), isAdopted);
     }
 }

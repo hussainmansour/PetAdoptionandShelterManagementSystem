@@ -12,21 +12,23 @@ import com.example.petshelter.Services.Shelter.Filters.FilterCriteria;
 import com.example.petshelter.Services.Shelter.Filters.FilterFactory;
 import com.example.petshelter.Services.Shelter.Filters.FilterTypes;
 import com.example.petshelter.Services.Shelter.Filters.RelationList;
+import io.micrometer.common.lang.NonNullApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.rsocket.RSocketProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@NonNullApi
 public class PetSerivceImpl implements PetService{
 
 
@@ -58,27 +60,49 @@ public class PetSerivceImpl implements PetService{
     }
 
     private Specification<Pet> getAllSpecification(){
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("pet_id") , -1));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("id") , -1));
     }
     private Specification<Pet> getSpecification(List<RelationList> criteria){
         Specification<Pet> pets = getAllSpecification();
+
         for(RelationList c : criteria){
             FilterCriteria filterCriteria = filterFactory.getFilterCriteria(c);
+            System.out.println(c.first);
             pets = pets.and(filterCriteria.meetCriteria());
+            System.out.println("done");
+            System.out.println(pets);
         }
         return pets;
 
     }
-    public ResponseEntity<Page<Pet>> getAllPets(GetPetsDTO getPetsDTO){
-
-
-        Pageable pageable = (Pageable) PageRequest.of(getPetsDTO.pageNo,10 );
-        Page<Pet> petsPage = (Page<Pet>) petRepository.findAll( getSpecification(getPetsDTO.criteria));
-
-        if (petsPage.isEmpty()) {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Page<SearchPetDTO>> getAllPets(GetPetsDTO getPetsDTO){
+        try {
+            Pageable pageable = PageRequest.of(getPetsDTO.getPageNo(), 10);
+            Specification<Pet> temp0 = getSpecification(getPetsDTO.getCriteria());
+            List<Pet> temp = petRepository.findAll( temp0);
+            System.out.println(temp.size());
+            Page<Pet> petsPage =  petRepository.findAll( getSpecification(getPetsDTO.getCriteria()) , pageable);
+            System.out.println(petsPage.getSize());
+            if (petsPage.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            Page<SearchPetDTO>  searchPetDTOPage = new PageImpl<>(
+                    petsPage.getContent().stream()
+                            .map(user -> SearchPetDTO.builder()
+                                    .date(user.getDateOfBirth().toString())
+                                    .petId(user.getId())
+                                    .name(user.getName())
+                                    .shelterName(user.getShelterName().getName())
+                                    .gender(user.getGender())
+                                    .build())
+                            .toList(),
+                    pageable, petsPage.getTotalElements()
+            );
+            return ResponseEntity.ok(searchPetDTOPage);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
         }
-        return ResponseEntity.ok(petsPage);
+
 
     }
 

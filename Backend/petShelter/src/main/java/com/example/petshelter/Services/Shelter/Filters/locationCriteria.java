@@ -13,8 +13,8 @@ public class locationCriteria implements FilterCriteria{
     @Override
     public Specification<Pet> meetCriteria() {
         return (root, query, criteriaBuilder) -> {
-            Join<Pet, Shelter> authorsBook = root.join("shelter");
-            return criteriaBuilder.like(root.get("location"), "%" + location + "%");
+            Join<Pet, Shelter> authorsBook = root.join("shelterName");
+            return criteriaBuilder.like(authorsBook.get("location"), "%" + location + "%");
         };
 
     }
