@@ -3,6 +3,7 @@ package com.example.petshelter.Controllers;
 import com.example.petshelter.DTOs.GetPetsDTO;
 import com.example.petshelter.DTOs.PetDTO;
 import com.example.petshelter.DTOs.ProfileDTO;
+import com.example.petshelter.DTOs.SearchPetDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -23,7 +24,8 @@ public class PetController {
     private PetService petService;
 
     @GetMapping("/all")
-    public ResponseEntity<Page<Pet>> getAllPets(@RequestBody GetPetsDTO getPetsDTO) {
+    public ResponseEntity<Page<SearchPetDTO>> getAllPets(@RequestBody GetPetsDTO getPetsDTO) {
+        System.out.println("here");
         return petService.getAllPets(getPetsDTO);
     }
 
