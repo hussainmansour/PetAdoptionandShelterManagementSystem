@@ -1,81 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 import logo from "./Assets/header.png";
 import Loading from "./Loading";
 import AddStaff from "./AddStaff";
 import UpdateShelter from "./UpdateShelter";
+import { fetchShelterStaffs } from "../../Services/ShelterService";
+import Cookies from "js-cookie";
 
 function Shelter() {
   const location = useLocation();
   const shelterInfo = new URLSearchParams(location.search);
   const shelterName = shelterInfo.get("name");
 
-  const isLoading = false;
-  const data = [
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-    {
-      firstName: "Amr",
-      lastName: "Ahmed",
-      userName: "amrAhmed",
-      contactNo: "111-111-1111",
-      role: "Reviewer",
-    },
-  ];
+  const { data, isLoading, error, refetch } = useQuery(
+    "fetchShelterStaffMembers",
+    () => fetchShelterStaffs(shelterName, Cookies.get("token")),
+    { refetchOnWindowFocus: false }
+  );
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 min-h-screen">
@@ -126,8 +76,8 @@ function Shelter() {
                       key={index}
                       className="border-b text-lg dark:border-gray-700 text-gray-400"
                     >
-                      <td className="px-4 py-3">{user.firstName}</td>
-                      <td className="px-4 py-3">{user.lastName}</td>
+                      <td className="px-4 py-3">{user.fname}</td>
+                      <td className="px-4 py-3">{user.lname}</td>
                       <td className="px-4 py-3">{user.userName}</td>
                       <td className="px-4 py-3">{user.contactNo}</td>
                       <td className="px-4 py-3">{user.role}</td>
@@ -139,8 +89,8 @@ function Shelter() {
           </div>
         </div>
       </div>
-      <AddStaff shelterName = {shelterName}/>
-      <UpdateShelter shelterShelter = {shelterName} />
+      <AddStaff shelterName = {shelterName} func = {refetch}/>
+      <UpdateShelter shelterName = {shelterName} />
     </section>
   );
 }

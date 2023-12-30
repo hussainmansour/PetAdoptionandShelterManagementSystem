@@ -1,6 +1,11 @@
 import { React, useState } from "react";
+import { GetAuthDataFn } from "../../Routes/Wrapper";
+import { insertShelter } from "../../Services/ShelterService";
+import Cookies from "js-cookie";
 
-const ShelterModal = ({ isOpen, closeModal }) => {
+const ShelterModal = ({ isOpen, closeModal, refetchFunc }) => {
+
+  const { person } = GetAuthDataFn();
   const [shetlerName, setShelterName] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [location, setLocation] = useState("");
@@ -17,7 +22,23 @@ const ShelterModal = ({ isOpen, closeModal }) => {
     setLocation(e.target.value);
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    console.log(shetlerName, contactNo, location);
+    if( await insertShelter({
+      managerUsername: person.username,
+      shelterName: shetlerName,
+      contactNo: contactNo,
+      location: location,
+    }, Cookies.get("token")) === "Shelter is already exists") {
+      alert("Shelter is already exists"); 
+    } else {
+      setShelterName("");
+      setContactNo("");
+      setLocation("");
+      closeModal();
+      await refetchFunc();    
+    }
+  };
 
   const cancelSave = () => {
     setShelterName("");

@@ -12,11 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/shelters")
+@RequestMapping("/manager/shelters")
 public class ShelterController {
 
     @Autowired
@@ -29,10 +31,10 @@ public class ShelterController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> insertShelter(@RequestBody ShelterDto shelterDto) {
+    public ResponseEntity<String> insertShelter(@Valid @RequestBody ShelterDto shelterDto) {
+        System.out.println(shelterDto);
         try {
-            shelterService.insertShelter(shelterDto);
-            return ResponseEntity.ok("Shelter inserted successfully");
+            return ResponseEntity.ok(shelterService.insertShelter(shelterDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inserting shelter");
         }
@@ -40,30 +42,61 @@ public class ShelterController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateShelter(@RequestBody ShelterDto shelterDto) {
+        System.out.println("gereeeee" + shelterDto);
         try {
-            shelterService.updateShelter(shelterDto);
-            return ResponseEntity.ok("Shelter updated successfully");
+            return ResponseEntity.ok(shelterService.updateShelter(shelterDto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating shelter");
         }
     }
 
-    @GetMapping("/manager/{managerUsername}")
-    public ResponseEntity<List<Shelter>> getManagerShelters(@PathVariable String managerUsername) {
+    @GetMapping("/getShelters/{managerUsername}")
+    public ResponseEntity<List<ShelterDto>> getManagerShelters(@PathVariable String managerUsername) {
         List<Shelter> managerShelters = shelterService.getManagerShelters(managerUsername);
-        return ResponseEntity.ok(managerShelters);
+        List<ShelterDto> shelterDtoList = new ArrayList<>();
+
+        for (Shelter shelter : managerShelters) {
+            ShelterDto shelterDto = new ShelterDto();
+            shelterDto.setManagerUsername(shelter.getManagerUsername().getManagerUsername());
+            shelterDto.setShelterName(shelter.getName());
+            shelterDto.setLocation(shelter.getLocation());
+            shelterDto.setContactNo(shelter.getContactNo());
+            shelterDtoList.add(shelterDto);
+        }
+        return ResponseEntity.ok(shelterDtoList);
     }
 
     //get staffs of a shelter
     @GetMapping("/staffs/{shelterName}")
-    public ResponseEntity<Set<Staff>> getShelterStaffs(@PathVariable String shelterName) {
+    public ResponseEntity<List<StaffDTO>> getShelterStaffs(@PathVariable String shelterName) {
+        System.out.println(shelterName);
         Set<Staff> shelterStaffs = shelterService.getShelterStaffs(shelterName);
-        return ResponseEntity.ok(shelterStaffs);
+        List<StaffDTO> staffDTOList = new ArrayList<>();
+
+        for (Staff staff : shelterStaffs) {
+            StaffDTO staffDTO = new StaffDTO();
+            staffDTO.setUserName(staff.getStaffUsername());
+            staffDTO.setFname(staff.getFname());
+            staffDTO.setLname(staff.getLname());
+            staffDTO.setContactNo(staff.getContactNo());
+            staffDTO.setRole(staff.getRole());
+            staffDTOList.add(staffDTO);
+        }
+
+        return ResponseEntity.ok(staffDTOList);
     }
 
     @PostMapping("/addStaffMember")
     public ResponseEntity<String> addStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
+        System.out.println(staffDTO);
         String result = shelterService.addStaffMember(staffDTO);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/updateStaffMember")
+    public ResponseEntity<String> updateStaffMember(@Valid @RequestBody StaffDTO staffDTO) {
+        System.out.println("here");
+        String result = shelterService.updateStaffMember(staffDTO);
         return ResponseEntity.ok(result);
     }
 

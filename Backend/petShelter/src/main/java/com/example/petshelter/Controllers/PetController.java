@@ -1,9 +1,12 @@
 package com.example.petshelter.Controllers;
 
 import com.example.petshelter.DTOs.GetPetsDTO;
+import com.example.petshelter.DTOs.PetDTO;
+import com.example.petshelter.DTOs.ProfileDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("/test/pets")
 public class PetController {
 
     @Autowired
@@ -41,6 +44,12 @@ public class PetController {
         return ResponseEntity.ok(pets);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getProfile(@RequestParam String petId){
+        ProfileDTO pet = petService.getProfile(Integer.parseInt(petId));
+        return ResponseEntity.ok(pet);
+    }
+
 //    @GetMapping("/search/age")
 //    public ResponseEntity<List<Pet>> searchByAge(@RequestParam Integer age) {
 //        List<Pet> pets = petService.searchByAge(age);
@@ -54,7 +63,7 @@ public class PetController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> insertPet(@RequestBody Pet pet) {
+    public ResponseEntity<String> insertPet(@RequestBody PetDTO pet) {
         try {
             petService.insertPet(pet);
             return ResponseEntity.ok("Pet inserted successfully");

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import UpdateModal from "./UpdateModal";
 
-function UpdateShelter() {
+function UpdateShelter(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -22,7 +22,7 @@ function UpdateShelter() {
       >
         Update details of the shelter
       </button>
-      <UpdateModal isOpen={isModalOpen} closeModal={closeModal} />
+      <UpdateModal isOpen={isModalOpen} closeModal={closeModal} shelterName={props.shelterName} />
     </div>
   );
 }

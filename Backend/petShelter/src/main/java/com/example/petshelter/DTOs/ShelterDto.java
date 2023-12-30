@@ -1,13 +1,20 @@
 package com.example.petshelter.DTOs;
 
 
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShelterDto {
 
-    public String managerUsername;
-    public String ShelterName ;
-    public String location;
-    public String contactNo;
+    private String managerUsername;
+    @NotNull
+    @NotBlank
+    private String shelterName ;
+    private String location;
+    private String contactNo;
 }

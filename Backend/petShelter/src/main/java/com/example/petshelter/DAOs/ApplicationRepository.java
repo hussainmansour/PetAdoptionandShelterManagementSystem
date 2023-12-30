@@ -12,8 +12,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ApplicationRepository extends JpaRepository<Application, ApplicationId> {
-    @Query("SELECT a FROM Application a WHERE a.status IN ('Accepted', 'Refused') ORDER BY a.date")
-    List<Application> findAllAcceptedOrRefusedApplicationsOrderByDate();
+
+
 
 
     @Query("SELECT a FROM Application a WHERE a.pet.id = :petId")
@@ -29,7 +29,12 @@ public interface ApplicationRepository extends JpaRepository<Application, Applic
     List <Application> findApplicationsByPetAndAdopter(@Param("adopterId") String adopterId ,@Param("petId") Integer petId );
 
 
+    @Query("SELECT a FROM Application a WHERE a.status IN ('Accepted', 'Refused') and a.adopterUsername.adopterUsername = :adopterId ORDER BY a.date")
+    List<Application> findAllAcceptedOrRefusedApplicationsOrderByDate(@Param("adopterId") String adopterId);
 
+
+    @Query("SELECT a FROM Application a WHERE a.status = 'Accepted' and a.adopterUsername.adopterUsername = :adopterId ORDER BY a.date")
+    List<Application> findAllAcceptedApplicationsOrderByDate(@Param("adopterId") String adopterId);
 
 
 }

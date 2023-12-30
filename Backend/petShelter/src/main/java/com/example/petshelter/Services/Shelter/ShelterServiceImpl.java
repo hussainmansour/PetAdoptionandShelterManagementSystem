@@ -10,6 +10,7 @@ import com.example.petshelter.Models.Manager;
 import com.example.petshelter.Models.Shelter;
 import com.example.petshelter.Models.Staff;
 import com.example.petshelter.Services.Shelter.ShelterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,29 +44,39 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     @Override
-    public ResponseEntity insertShelter(ShelterDto shelterDto) {
+    public String insertShelter(ShelterDto shelterDto) {
+        if(shelterRepository.findById(shelterDto.getShelterName()).isPresent()){
+            return "Shelter is already exists";
+        }
         Shelter shelter = Shelter.builder()
-                //.managerUsername(managerRepository.findById(shelterDto.managerUsername).orElseThrow())
-                .name(shelterDto.ShelterName)
-                .contactNo(shelterDto.contactNo)
+                .managerUsername(managerRepository.findById(shelterDto.getManagerUsername()).orElseThrow())
+                .name(shelterDto.getShelterName())
+                .contactNo(shelterDto.getContactNo())
+                .location(shelterDto.getLocation())
                 .build();
         shelterRepository.save(shelter);
-        return (ResponseEntity) ResponseEntity.ok();
+        return  "Shelter inserted successfully";
     }
 
     @Override
     public List<Shelter> getManagerShelters(String managerUserName) {
-        Manager manager = (Manager) managerRepository.findAllById(Collections.singleton(managerUserName));
+        Manager manager = managerRepository.findById(managerUserName).orElseThrow();
         return shelterRepository.findByManagerUsername(manager);
     }
 
     @Override
-    public ResponseEntity updateShelter(ShelterDto shelterDto) {
-        Shelter shelter = shelterRepository.findById(shelterDto.ShelterName).orElseThrow();
-        shelter.setName(shelterDto.ShelterName);
-        shelter.setContactNo(shelterDto.contactNo);
+    public String updateShelter(ShelterDto shelterDto) {
+
+
+        if(shelterRepository.findById(shelterDto.getShelterName()).isEmpty()){
+            return "shelter is not exist";
+        }
+        Shelter shelter = shelterRepository.findById(shelterDto.getShelterName()).orElseThrow();
+        shelter.setName(shelterDto.getShelterName());
+        shelter.setLocation(shelterDto.getLocation());
+        shelter.setContactNo(shelterDto.getContactNo());
         shelterRepository.save(shelter);
-        return (ResponseEntity) ResponseEntity.ok();
+        return "shelter is updated succesfully";
     }
 
     @Override
@@ -89,10 +100,29 @@ public class ShelterServiceImpl implements ShelterService {
                     .lname(staff.getLname())
                     .password(passwordEncoder.encode(staff.getPassword()))
                     .contactNo(staff.getContactNo())
+                    .role(staff.getRole())
                     .shelterName(shelterRepository.findById(staff.getShelterName()).orElseThrow())
                     .build();
             staffRepository.save(newStaff);
             return "Staff member added successfully";
+        } catch (Exception e) {
+            return "Error adding staff member";
+        }
+    }
+
+    @Override
+    public String updateStaffMember(@Valid StaffDTO staff){
+        try {
+            if(staffRepository.existsById(staff.getUserName())){
+                Staff staff1 = staffRepository.findById(staff.getUserName()).orElseThrow();
+                staff1.setContactNo(staff.getContactNo());
+                staff1.setFname(staff.getFname());
+                staff1.setLname(staff.getLname());
+                staffRepository.save(staff1);
+                return "Staff member updated successfully";
+
+            }
+            return "Staff member is not exists";
         } catch (Exception e) {
             return "Error adding staff member";
         }

@@ -1,8 +1,11 @@
 package com.example.petshelter.Services.Shelter;
 
 import com.example.petshelter.DTOs.GetPetsDTO;
+import com.example.petshelter.DTOs.PetDTO;
+import com.example.petshelter.DTOs.ProfileDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.Filters.RelationList;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
@@ -13,7 +16,7 @@ public interface PetService {
     public ResponseEntity<Page<Pet>> getAllPets(GetPetsDTO getPetsDTO);
     public ResponseEntity<Page<Pet>> getAllNonAdoptedPets(int pageNo );
 
-    public void insertPet(Pet pet);
+    public void insertPet(PetDTO pet);
 
     public List<Pet> searchByShelter(String shelterName);
 
@@ -28,6 +31,8 @@ public interface PetService {
     public List<Pet> searchByLocation(String location);
 
     public void adoptPet(Pet pet);
+
+    public ProfileDTO getProfile(Integer petId);
 
 
 

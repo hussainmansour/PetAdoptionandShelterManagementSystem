@@ -3,6 +3,7 @@ package com.example.petshelter.Services.Shelter;
 import com.example.petshelter.DAOs.AdopterRepository;
 import com.example.petshelter.DAOs.ApplicationRepository;
 import com.example.petshelter.DAOs.PetRepository;
+import com.example.petshelter.DTOs.ApplicationDTO;
 import com.example.petshelter.DTOs.InsertApplicationDTO;
 import com.example.petshelter.DTOs.UpdateApplicationDTO;
 import com.example.petshelter.Models.Adopter;
@@ -12,6 +13,7 @@ import com.example.petshelter.Models.Pet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -24,28 +26,87 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Autowired
     AdopterRepository adopterRepository;
-    public List<Application> getAllApplication(){
-        return applicationRepository.findAll();
+    public List<ApplicationDTO> getAllApplication(){
+
+        List<Application> result =  applicationRepository.findAll();
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(application.getAdopterUsername().getAdopterUsername())
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
-    public List<Application> getPetApplication(Integer petId){
-        return applicationRepository.findApplicationsByPet(petId);
+    public List<ApplicationDTO> getPetApplication(Integer petId){
+        List<Application> result =  applicationRepository.findApplicationsByPet(petId);
+
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(application.getAdopterUsername().getAdopterUsername())
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
 
-    public List<Application> getAdopterApplication(String adopterUserName){
-        return applicationRepository.findApplicationsByAdopter(adopterUserName);
+    public List<ApplicationDTO> getAdopterApplication(String adopterUserName){
+        List<Application> result =  applicationRepository.findApplicationsByAdopter(adopterUserName);
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(adopterUserName)
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
-    public List<Application> getAcceptedApplication(String adopterUserName){
-        return applicationRepository.findAllAcceptedOrRefusedApplicationsOrderByDate();
+    public List<ApplicationDTO> getAcceptedApplication(String adopterUserName){
+        List<Application> result =  applicationRepository.findAllAcceptedOrRefusedApplicationsOrderByDate(adopterUserName);
+
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(adopterUserName)
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
 
 
-    public List<Application> getAcceptedOrRefusedApplication(String adopterUserName){
-        return applicationRepository.findAllAcceptedOrRefusedApplicationsOrderByDate();
+    public List<ApplicationDTO> getAcceptedOrRefusedApplication(String adopterUserName){
+        List<Application> result = applicationRepository.findAllAcceptedOrRefusedApplicationsOrderByDate(adopterUserName);
+
+        List< ApplicationDTO> dto = new ArrayList<>();
+        for(Application application: result ){
+            ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                    .petName(application.getPet().getName())
+                    .petId(application.getPet().getId())
+                    .userName(adopterUserName)
+                    .status(application.getStatus())
+                    .build();
+            dto.add(applicationDTO);
+        }
+        return dto;
     }
 
 
     public String insertApplication(InsertApplicationDTO insertApplicationDTO){
-        if(applicationRepository.findApplicationsByPetAndAdopter(insertApplicationDTO.userName , insertApplicationDTO.petId) != null){
+        if(!applicationRepository.findApplicationsByPetAndAdopter(insertApplicationDTO.userName , insertApplicationDTO.petId).isEmpty()){
             return "Error the Application is already exists !! ";
         }
 
@@ -68,7 +129,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     public String updateApplication(UpdateApplicationDTO updateApplicationDTO){
         List<Application> app  = applicationRepository.findApplicationsByPetAndAdopter(updateApplicationDTO.userName , updateApplicationDTO.petId);
-        if(app.get(0).getStatus().equals("Pending")){
+        if(!app.get(0).getStatus().equals("Pending")){
             return "can't update this Application";
         }
 
