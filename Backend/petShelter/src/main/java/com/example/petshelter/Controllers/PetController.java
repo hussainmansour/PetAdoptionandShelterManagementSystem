@@ -2,9 +2,11 @@ package com.example.petshelter.Controllers;
 
 import com.example.petshelter.DTOs.GetPetsDTO;
 import com.example.petshelter.DTOs.PetDTO;
+import com.example.petshelter.DTOs.ProfileDTO;
 import com.example.petshelter.Models.Pet;
 import com.example.petshelter.Services.Shelter.PetService;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,12 @@ public class PetController {
     public ResponseEntity<List<Pet>> searchByBreed(@RequestParam String breed) {
         List<Pet> pets = petService.searchByBreed(breed);
         return ResponseEntity.ok(pets);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getProfile(@RequestParam String petId){
+        ProfileDTO pet = petService.getProfile(Integer.parseInt(petId));
+        return ResponseEntity.ok(pet);
     }
 
 //    @GetMapping("/search/age")
