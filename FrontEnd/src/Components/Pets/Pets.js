@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../Shelter Manager/Assets/header.png";
 
-function Application(props) {
+function Pets(props) {
 
   const data = [
     {
@@ -115,7 +115,7 @@ function Application(props) {
       />
       <div className="mx-auto max-w-screen opacity-75 pb-10 px-8 ">
         <div className="text-5xl text-gray-700 bg-gray-50 tracking-widest dark:bg-gray-700 text-center dark:text-gray-400 mt-5 px-4 py-3 rounded-2xl dark:bg-opacity-25">
-          Applications
+          Pets in the Shelter
         </div>{" "}
         {/* table of staff members */}
         <div className="bg-white dark:bg-gray-800 relative mt-12 shadow-md sm:rounded-lg overflow-hidden ">
@@ -197,4 +197,4 @@ function Application(props) {
   );
 }
 
-export default Application;
+export default Pets;
